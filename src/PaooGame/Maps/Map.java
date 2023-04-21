@@ -1,6 +1,5 @@
 package PaooGame.Maps;
 
-import PaooGame.Items.Hero;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
@@ -32,6 +31,7 @@ enum Key {
 public class Map {
     public boolean hasCol=false;
     public static int score;
+    public int bladePozX,bladePozY;
 
     public static Graphics g;
     private RefLinks refLink;   /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
@@ -74,7 +74,7 @@ public class Map {
     //    private int obstacleSize=48;
 //    boolean collisionDetected=false;
 //    List<Rectangle> obstacleColliders= new ArrayList<>();
-    private Hero hero;
+
 
     /*! \fn public Map(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -108,14 +108,50 @@ public class Map {
 //        }
 //    }
 
+//    public void findBladeX() //getX
+//    {
+//        for(int i=0;i<height;i++)
+//            for(int j=0;j<width;j++)
+//                if(tiles[i][j]==Tile.bladeTile.GetId())
+//                {
+//                    bladePozX=i;
+//                  //  bladePozY=j;
+//                }
+//
+//
+//    }
 
+    public int findBladeY() //GetY
+    {
+        for(int i=0;i<height;i++)
+            for(int j=0;j<width;j++)
+                if(tiles[i][j]==Tile.bladeTile.GetId())
+                {
+                   // bladePozX=i;
+                    bladePozY=j;
+                }
+
+        return bladePozY;
+    }
 
     /*! \fn public  void Update()
         \brief Actualizarea hartii in functie de evenimente (un copac a fost taiat)
      */
     public void Update() {
-
-
+//        for(int i=0;i<height;i++)
+//            for(int j=0;j<width;j++)
+//            {
+//                while(j<width)
+//                {
+//                    int poz=findBladeY();
+//                    tiles[i][poz]=0;
+//                    tiles[i][poz+1]=;
+//                }
+//
+//
+//            }
+        int y=findBladeY();
+        System.out.println(y);
     }
 
     /*! \fn public void Draw(Graphics g)

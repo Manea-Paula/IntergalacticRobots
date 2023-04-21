@@ -194,8 +194,8 @@ public class Assets
 
         chest=sheetItems.crop(0,0);
         battery=sheetItems.crop(1,0);
-    //    portal=sheetItems.crop(2,0);
-        blade=sheetItems.crop(2,0);
+        portal=sheetItems.crop(2,0);
+     //   blade=sheetItems.crop(2,0);
 
 
 

@@ -116,6 +116,8 @@ public class Game implements Runnable
         Sunt construite elementele grafice (assets): dale, player, elemente active si pasive.
 
      */
+
+    //bg music -> thread
     private void InitGame()
     {
             /// Este construita fereastra grafica.
