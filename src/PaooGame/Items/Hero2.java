@@ -109,7 +109,9 @@ public class Hero2 extends Character
             }
             image = attackFrames[currentFrame / animationSpeed];
 
-            SoundManager.playSound("/home/paula/Documents/PaooGameEtapa2/res/textures/Angry Robot Bird.wav");
+            String soundUrl= this.getClass().getResource("/textures/AngryRobotBird.wav").getPath();
+           // SoundManager.playSound("/home/paula/Documents/PaooGameEtapa2/res/textures/Angry Robot Bird.wav");
+            SoundManager.playSound(soundUrl);
         }
 
         else

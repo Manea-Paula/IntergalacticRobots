@@ -18,6 +18,7 @@ public class PlayState extends State
     private Camera camera;
     private Obstacol obstacol,obstacol2;
     private Chest chest;
+    ObstacolManager obstacolManager = ObstacolManager.getInstance();
  //   private CameraHero2 camera2;
 
     /*! \fn public PlayState(RefLinks refLink)
@@ -45,8 +46,6 @@ public class PlayState extends State
         obstacol=new Obstacol(refLink,900,150,48,48,80,300);
         obstacol2=new Obstacol(refLink,1300,150,48,48,60,300);
 
-
-        ObstacolManager obstacolManager = ObstacolManager.getInstance();
         obstacolManager.addObstacle(obstacol);
         obstacolManager.addObstacle(obstacol2);
 
@@ -62,11 +61,12 @@ public class PlayState extends State
         hero.Update();
 
         hero2.Update();
-        obstacol.Update();
+        //obstacol.Update();
+
         hero.intersectareSpike();
       //  chest.Update();
     //    camera.update();
-
+        obstacolManager.updateObstacles();
      //   camera2.centerOnEntity(hero2);
         camera.centerOnEntity(hero);
         obstacol.Update();
@@ -84,7 +84,7 @@ public class PlayState extends State
         map.Draw(g);
        // g.translate((int) -camera.getxOffset(), (int) -camera.getyOffset());
         hero.Draw(g);
-
+        obstacolManager.drawObstacles(g);
         hero2.Draw(g);
         chest.Draw(g);
         obstacol.Draw(g);

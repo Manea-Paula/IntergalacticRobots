@@ -160,17 +160,17 @@ public class Map {
             sc = new Scanner(new BufferedReader(isr));
             int rows = 31;
             int columns = 50;
-            int [][] myArray = new int[rows][columns];
+            int [][] harta = new int[rows][columns];
             while(sc.hasNextLine()) {
-                for (int i=0; i<myArray.length; i++) {
+                for (int i=0; i<harta.length; i++) {
                     String[] line = sc.nextLine().trim().split(" ");
                     for (int j=0; j<line.length; j++) {
-                        myArray[i][j] = Integer.parseInt(line[j]);
+                        harta[i][j] = Integer.parseInt(line[j]);
                     }
                 }
             }
-            tiles = myArray;
-            System.out.println(Arrays.deepToString(myArray));
+            tiles = harta;
+            System.out.println(Arrays.deepToString(harta));
 
 
 //            InputStream is=getClass().getResourceAsStream("/maps/harta.txt");
