@@ -1,12 +1,11 @@
 package PaooGame.Maps;
 
+import PaooGame.Items.Hero;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -19,7 +18,7 @@ public class Map {
     private RefLinks refLink;   /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
     public static int width = 50;          /*!< Latimea hartii in numar de dale.*/
     public static int height = 31;         /*!< Inaltimea hartii in numar de dale.*/
-    private int[][] tiles = new int[width][height];     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
+    private int[][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
     int [][]obstacles={
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
@@ -56,7 +55,7 @@ public class Map {
     //    private int obstacleSize=48;
 //    boolean collisionDetected=false;
 //    List<Rectangle> obstacleColliders= new ArrayList<>();
-//    private Hero hero;
+    private Hero hero;
 
     /*! \fn public Map(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -70,7 +69,7 @@ public class Map {
 
         ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
         LoadWorld();
-        System.out.println("ok");
+        //    addObstacle();
 
     }
 
@@ -108,7 +107,7 @@ public class Map {
             {
 
                 Tile tile= GetTile(x,y);
-                tile.Draw(g,x* Tile.TILE_HEIGHT -Camera.getX(),y*Tile.TILE_HEIGHT- Camera.getY());
+                tile.Draw(g,x* Tile.TILE_HEIGHT - Camera.getX(),y*Tile.TILE_HEIGHT- Camera.getY());
             }
 
 
@@ -137,7 +136,7 @@ public class Map {
         if (x < 0 || y < 0 || x >= width || y >= height) {
             return Tile.grassTile;
         }
-        Tile t = Tile.tiles[tiles[x][y]];
+        Tile t = Tile.tiles[tiles[y][x]];
         if (t == null) {
             return Tile.flowerTile;
         }
@@ -152,25 +151,26 @@ public class Map {
         //atentie latimea si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
         //se poate implementa notiunea de camera/cadru de vizualizare al hartii
         ///Se stabileste latimea hartii in numar de dale.
-        try {
+        try
+        {
+            System.out.println("Hello World");
             Scanner sc = null;
             InputStream is = this.getClass().getResourceAsStream("/maps/harta.txt");
             InputStreamReader isr = new InputStreamReader(is);
             sc = new Scanner(new BufferedReader(isr));
             int rows = 31;
             int columns = 50;
-            int[][] myArray = new int[rows][columns];
-            while (sc.hasNextLine()) {
-                for (int i = 0; i < myArray.length; i++) {
+            int [][] myArray = new int[rows][columns];
+            while(sc.hasNextLine()) {
+                for (int i=0; i<myArray.length; i++) {
                     String[] line = sc.nextLine().trim().split(" ");
-                    for (int j = 0; j < line.length; j++) {
+                    for (int j=0; j<line.length; j++) {
                         myArray[i][j] = Integer.parseInt(line[j]);
                     }
                 }
             }
             tiles = myArray;
             System.out.println(Arrays.deepToString(myArray));
-        }
 
 
 //            InputStream is=getClass().getResourceAsStream("/maps/harta.txt");
@@ -200,35 +200,37 @@ public class Map {
 //
 //            br.close();
 
-            //}
+        }
         catch(Exception e)
-            {
-                e.printStackTrace();
-                // daca incarc prost harta din fisier, fct o restaurez pe harta statica
-                width = 50;
-                height = 30;
-                tiles = new int[width][height];
-                for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width; x++) {
-                        tiles[x][y] = MiddleEastMap(y, x);
-                    }
-                }
-
-            }
-
-
+        {
+            e.printStackTrace();
+            // daca incarc prost harta din fisier, fct o restaurez pe harta statica
             width = 50;
-            ///Se stabileste inaltimea hartii in numar de dale
             height = 31;
-            ///Se construieste matricea de coduri de dale
             tiles = new int[width][height];
-            //Se incarca matricea cu coduri
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     tiles[x][y] = MiddleEastMap(y, x);
                 }
             }
 
+        }
+
+
+
+//        width = 50;
+//        ///Se stabileste inaltimea hartii in numar de dale
+//        height = 31;
+//        ///Se construieste matricea de coduri de dale
+//        tiles = new int[width][height];
+//        //Se incarca matricea cu coduri
+//        for(int y = 0; y < height; y++)
+//        {
+//            for(int x = 0; x < width; x++)
+//            {
+//                tiles[x][y] = MiddleEastMap(y, x);
+//            }
+//        }
     }
 
 
@@ -242,15 +244,15 @@ public class Map {
         ///Definire statica a matricei de coduri de dale.
         final int map[][] = {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
