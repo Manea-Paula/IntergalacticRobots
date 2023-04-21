@@ -69,16 +69,20 @@ public class Map {
 
         ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
         LoadWorld();
+    //    addChest();
         //    addObstacle();
 
     }
 
-//    public void addObstacle() {
-//        for (int i = 0; i < obstacles.length; i++) {
-//            for (int j = 0; j < obstacles[i].length; j++) {
-//                if (obstacles[i][j] == 1) {
-//                    Rectangle obstacle = new Rectangle(j * obstacleSize, i * obstacleSize, obstacleSize, obstacleSize);
-//                    obstacleColliders.add(obstacle);
+//    public void addChest() {
+//        for (int i = 0; i < height; i++) {
+//            for (int j = 0; j < width; j++) {
+//                if (tiles[i][j] == 5) {
+//                    Rectangle chest = new Rectangle(j * Tile.TILE_HEIGHT, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+//                    if(hero.getBounds().intersects(chest))
+//                    {
+//
+//                    }
 //                }
 //            }
 //        }

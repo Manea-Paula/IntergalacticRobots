@@ -55,27 +55,10 @@ public class Chest extends Item {
                 case found:
                     System.out.println("You found the key with info: " + Key.found.getInfo());
 
-             //       hero.score++;
                     break;
                 case notFound:
                     System.out.println("No key found with info: " + Key.notFound.getInfo());
-
-           //         hero.score=0;
-                    break;
-            }
-
-
-
-            // facem un switch case pentru cazul in care cheia a fost gasita sau nu
-            switch (Key.found)
-            {
-                case found:
-                    System.out.println("You found the key with info: " + Key.found.getInfo());
-
-                    break;
-                case notFound:
-                    System.out.println("No key found with info: " + Key.notFound.getInfo());
-
+                  //  hero.score=0;
                     break;
             }
 

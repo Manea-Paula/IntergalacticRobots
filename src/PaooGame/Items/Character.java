@@ -137,4 +137,7 @@ public abstract class Character extends Item
     {
         this.yMove = yMove;
     }
+
+    public void SetScore(int score){ this.score=score;}
+    public int GetScore(){ return score;}
 }

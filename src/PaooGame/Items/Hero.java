@@ -187,8 +187,8 @@ public class Hero extends Character
             }
            else
             {
-                yMove=100;
-                SetX(x+230);
+                yMove=42;
+                SetX(x);
             }
 
         }
@@ -207,8 +207,8 @@ public class Hero extends Character
             }
             else
             {
-                yMove=100;
-                SetX(x+230);
+                yMove=-42;
+                SetX(x);
             }
         }
         else if(refLink.GetKeyManager().left)
@@ -226,8 +226,8 @@ public class Hero extends Character
             }
             else
             {
-                xMove=100;
-                SetY(y+230);
+                xMove=42;
+                SetY(y);
             }
            // xMove=-speed;
 
@@ -247,8 +247,8 @@ public class Hero extends Character
             }
             else
             {
-                xMove=100;
-                SetY(y+230);
+                xMove=-42;
+                SetY(y);
             }
         }
 
