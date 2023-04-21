@@ -38,6 +38,7 @@ public class Assets
     public static BufferedImage chest;
     public static BufferedImage portal;
     public static BufferedImage enemy;
+    public static BufferedImage blade;
 
 
 //    public static BufferedImage townGrass;
@@ -193,7 +194,8 @@ public class Assets
 
         chest=sheetItems.crop(0,0);
         battery=sheetItems.crop(1,0);
-        portal=sheetItems.crop(2,0);
+    //    portal=sheetItems.crop(2,0);
+        blade=sheetItems.crop(2,0);
 
 
 

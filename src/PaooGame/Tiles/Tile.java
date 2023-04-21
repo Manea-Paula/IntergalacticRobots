@@ -28,6 +28,7 @@ public class Tile
     public static Tile chestTile=new ChestTile(5);
     public static Tile batteryTile=new BatteryTile(6);
     public static Tile portalTile=new PortalTile(7);
+    public static  Tile bladeTile=new BladeTile(8);
 
     public static final int TILE_WIDTH  = 52;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 52;                       /*!< Inaltimea unei dale.*/

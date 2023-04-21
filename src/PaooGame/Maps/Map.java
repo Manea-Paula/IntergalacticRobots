@@ -11,10 +11,27 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
+enum Key {
+    found(1),
+    notFound(0);
+
+    private final int info;
+
+    Key(int info) {
+        this.info = info;
+    }
+
+    public int getInfo() {
+        return info;
+    }
+}
+
 /*! \class public class Map
     \brief Implementeaza notiunea de harta a jocului.
  */
 public class Map {
+    public boolean hasCol=false;
+    public static int score;
 
     public static Graphics g;
     private RefLinks refLink;   /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
@@ -25,7 +42,7 @@ public class Map {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
@@ -71,6 +88,7 @@ public class Map {
 
         ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
         LoadWorld();
+        score=0;
     //    addChest();
         //    addObstacle();
 
@@ -125,9 +143,15 @@ public class Map {
         try {
             img = ImageIO.read(file);
             g.drawImage(img,800,10,null);
-            g.drawImage(img,10,10,null);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        if(hasCol)
+        {
+            System.out.println(hasCol);
+            g.drawString("Key Players"+(score+1),810,19);
         }
 
 
@@ -192,32 +216,6 @@ public class Map {
             System.out.println(Arrays.deepToString(harta));
 
 
-//            InputStream is=getClass().getResourceAsStream("/maps/harta.txt");
-//            BufferedReader br=new BufferedReader(new InputStreamReader(is));
-//
-//            int col=0;
-//            int row=0;
-//
-//            while(col<height && row<width) //avem un loop mai mare
-//            {
-//                String line=br.readLine();
-//                while(col<height)
-//                {
-//                    String nr[]=line.split(" "); //iau nr unul dupa altul
-//                    int num=Integer.parseInt(nr[col]); //schimb din string in int
-//                    //System.out.println(tiles[col][row]);
-//                    tiles[col][row]=num;
-//                    col++;
-//                }
-//                if(col==height)
-//                {
-//                    col=0;
-//                    row++;
-//                }
-//
-//            }
-//
-//            br.close();
 
         }
         catch(Exception e)
@@ -236,20 +234,6 @@ public class Map {
         }
 
 
-
-//        width = 50;
-//        ///Se stabileste inaltimea hartii in numar de dale
-//        height = 31;
-//        ///Se construieste matricea de coduri de dale
-//        tiles = new int[width][height];
-//        //Se incarca matricea cu coduri
-//        for(int y = 0; y < height; y++)
-//        {
-//            for(int x = 0; x < width; x++)
-//            {
-//                tiles[x][y] = MiddleEastMap(y, x);
-//            }
-//        }
     }
 
 
@@ -319,6 +303,26 @@ public class Map {
             for (int col = leftTile; col <= rightTile; col++) {
                 if (obstacles[row][col] == 1) {
                     return true; // a avut loc o coliziune
+                }
+            }
+        }
+
+
+        for (int row = topTile; row <= bottomTile; row++) {
+            for (int col = leftTile; col <= rightTile; col++) {
+                if (tiles[row][col] == 5) {
+                    switch (Key.found)
+                    {
+                        case found:
+                            System.out.println("intra in fct");
+
+                            hasCol=true;
+                            break;
+                        case notFound:
+                            System.out.println("No key found with info: " + PaooGame.Items.Key.notFound.getInfo());
+                            //  hero.score=0;
+                            break;
+                    }
                 }
             }
         }
