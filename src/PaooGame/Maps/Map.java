@@ -4,7 +4,9 @@ import PaooGame.Items.Hero;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -114,6 +116,19 @@ public class Map {
                 tile.Draw(g,x* Tile.TILE_HEIGHT - Camera.getX(),y*Tile.TILE_HEIGHT- Camera.getY());
             }
 
+        Font fnt0 = new Font("Monospaced", Font.BOLD,18);
+        g.setFont(fnt0);
+        g.setColor(Color.black);
+        File file=new File("/home/paula/Documents/PaooGameEtapa2/res/textures/rsz_secret_key.png");
+        BufferedImage img= null;
+
+        try {
+            img = ImageIO.read(file);
+            g.drawImage(img,800,10,null);
+            g.drawImage(img,10,10,null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
         //Se parcurge matricea de dale (codurile aferente) si se deseneaza harta respectiva
@@ -309,6 +324,8 @@ public class Map {
         }
 
         return false; // nu a avut loc nicio coliziune
+
+
     }
 
 

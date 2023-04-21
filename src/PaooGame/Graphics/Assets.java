@@ -62,7 +62,7 @@ public class Assets
         SpriteSheet sheetPlayer1= new SpriteSheet(ImageLoader.LoadImage("/textures/player.png"));
         SpriteSheet sheetPlayer2= new SpriteSheet(ImageLoader.LoadImage("/textures/player2.png"));
         SpriteSheet sheetItems= new SpriteSheet(ImageLoader.LoadImage("/textures/ITEMS.png"));
-        SpriteSheet en= new SpriteSheet(ImageLoader.LoadImage("/textures/enemy.png"));
+    //    SpriteSheet en= new SpriteSheet(ImageLoader.LoadImage("/textures/enemy.png"));
 
             /// Se obtin subimaginile corespunzatoare elementelor necesare.
           wall=sheet.crop(0,0);
