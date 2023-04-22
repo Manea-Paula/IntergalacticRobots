@@ -11,12 +11,12 @@ import PaooGame.RefLinks;
 public abstract class Character extends Item
 {
     public static final int DEFAULT_LIFE            = 100;   /*!< Valoarea implicita a vietii unui caracter.*/
-    public static final float DEFAULT_SPEED         = 1.9f; /*!< Viteza implicita a unu caracter.*/
+    public static float DEFAULT_SPEED         = 1.9f; /*!< Viteza implicita a unu caracter.*/
     public static final int DEFAULT_SCORE         = 0; /*!< Viteza implicita a unu caracter.*/
     public static final int DEFAULT_CREATURE_WIDTH  = 42;   /*!< Latimea implicita a imaginii caracterului.*/
     public static final int DEFAULT_CREATURE_HEIGHT = 42;   /*!< Inaltimea implicita a imaginii caracterului.*/
 
-    protected int life;     /*!< Retine viata caracterului.*/
+    public static int life;     /*!< Retine viata caracterului.*/
     protected int score;
     protected float speed;  /*!< Retine viteza de deplasare caracterului.*/
     protected float xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
@@ -72,7 +72,7 @@ public abstract class Character extends Item
     public void MoveY()
     {
             ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa Y.
-        y += yMove ;
+        y += yMove;
     }
 
     /*! \fn public int GetLife()

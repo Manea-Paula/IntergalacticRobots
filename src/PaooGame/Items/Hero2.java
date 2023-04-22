@@ -145,7 +145,7 @@ public class Hero2 extends Character
             }
             else
             {
-                yMove=42;
+                yMove=40;
                 SetX(x);
 
             }
@@ -165,7 +165,7 @@ public class Hero2 extends Character
             }
             else
             {
-                yMove=-42;
+                yMove=-40;
                 SetX(x);
             }
         }
@@ -183,7 +183,7 @@ public class Hero2 extends Character
             }
             else
             {
-                xMove=42;
+                xMove=40;
                 SetY(y);
             }
 
@@ -201,7 +201,7 @@ public class Hero2 extends Character
             }
             else
             {
-                xMove=-42;
+                xMove=-40;
                 SetY(y);
             }
         }

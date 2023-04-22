@@ -1,6 +1,7 @@
 package PaooGame.Maps;
 
 import PaooGame.Items.Character;
+import PaooGame.Items.Hero;
 import PaooGame.Items.Key;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
@@ -34,7 +35,9 @@ import java.util.Scanner;
 public class Map {
     private Key key;
     public boolean hasCol=false;
+    public boolean hasBattery=false;
     public static int score;
+    public static float speed=1.9f;
     public int bladePozX,bladePozY;
 
     public static Graphics g;
@@ -89,7 +92,7 @@ public class Map {
 
         ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
         LoadWorld();
-        score=0;
+      //  score=0;
     //    addChest();
         //    addObstacle();
 
@@ -165,7 +168,14 @@ public class Map {
         if(hasCol)
         {
             System.out.println(hasCol);
-            g.drawString("Key Players"+(Character.DEFAULT_SCORE+1),810,19);
+            g.drawString("Key Players "+(Character.DEFAULT_SCORE+1),810,19);
+
+         //   g.drawString("Speed"+(Hero2.speed),10,19);
+        }
+
+        if(hasBattery)
+        {
+            g.drawString("Life "+(Hero.life),10,19);
         }
 
 
@@ -371,6 +381,42 @@ public class Map {
         return false; // nu a avut loc nicio coliziune
 
 
+    }
+
+    public boolean checkCollisionWithBattery(float x, float y, int playerSize) {
+        System.out.println("baterii");
+        int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
+        int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
+        int topTile = (int) (y - playerSize / 2) / Tile.TILE_WIDTH;
+        int bottomTile = (int) (y + playerSize / 2) / Tile.TILE_WIDTH;
+
+        for (int row = topTile; row < bottomTile; row++)
+        {
+            for (int col = leftTile; col < rightTile; col++)
+            {
+                if(tiles[row][col]==6)
+                {
+                    System.out.println("speed increased");
+                    //Hero hero;
+                    //Hero.speed+=2.5f;
+                    Hero.life+=10;
+                    hasBattery=true;
+                    return true;
+                }
+
+
+                if(tiles[row][col]==7)
+                {
+                 //   speed-=0.5f;
+                    Hero.life-=10;
+                    hasBattery=true;
+                    return  true;
+                }
+
+            }
+        }
+
+        return false;
     }
 
 
