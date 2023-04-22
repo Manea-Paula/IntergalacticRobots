@@ -307,7 +307,7 @@ public class Hero extends Character
 
         if(life<0)
         {
-            System.out.println("GATA");
+            System.out.println("Personaj mort");
         }
 
     }

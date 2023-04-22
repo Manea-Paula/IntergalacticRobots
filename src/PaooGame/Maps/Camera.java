@@ -42,6 +42,26 @@ public class Camera {
             cameraY = (int) (h.GetY()) - (height - 100);
         }
 
+//        if(heroX<0)
+//        {
+//            heroX=0;
+//        }
+//
+//        if(heroY<0)
+//        {
+//            heroY=0;
+//        }
+
+//        if(heroX>935)
+//        {
+//            heroX=935;
+//        }
+//
+//        if(heroY>660)
+//        {
+//            heroY=660;
+//        }
+
 
 //            // Verifică dacă coordonata X a eroului se află în marginea stângă a camerei
 //            if (heroX <= cameraX + width / 2) {
