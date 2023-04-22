@@ -8,8 +8,13 @@ import PaooGame.Input.KeyState;
 import PaooGame.States.*;
 import PaooGame.Tiles.Tile;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 
 /*! \class Game
     \brief Clasa principala a intregului proiect. Implementeaza Game - Loop (Update -> Draw)
@@ -50,6 +55,8 @@ public class Game implements Runnable
  //   private GameWindow wnd2;
     private boolean         runState;   /*!< Flag ce starea firului de executie.*/
     private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
+    private Thread          musicThread;
+    private Clip music;
     private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
     /// Sunt cateva tipuri de "complex buffer strategies", scopul fiind acela de a elimina fenomenul de
     /// flickering (palpaire) a ferestrei.
@@ -195,6 +202,32 @@ public class Game implements Runnable
             gameThread = new Thread(this);
                 /// Threadul creat este lansat in executie (va executa metoda run())
             gameThread.start();
+
+            try {
+                // Creare stream audio
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("res/textures/backgroundMusic.wav"));
+
+                // Creare clip audio
+                music = AudioSystem.getClip();
+                music.open(audioInputStream);
+
+                // Setare volum
+                FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+               // gainControl.setValue(10.0f); // Reducem volumul cu 10 decibeli
+
+
+
+                // Reproducere în buclă
+                music.loop(Clip.LOOP_CONTINUOUSLY);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+
+            // Pornire fir de execuție pentru sunetul de fundal
+            musicThread = new Thread(() -> music.start());
+            musicThread.start();
+
+
         }
         else
         {

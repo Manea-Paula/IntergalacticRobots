@@ -10,6 +10,7 @@ public class SoundManager {
         try (AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundFile)) {
             DataLine.Info info = new DataLine.Info(Clip.class, inputStream.getFormat());
             Clip clip = (Clip) AudioSystem.getLine(info);
+
             clip.open(inputStream);
             clip.start();
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
