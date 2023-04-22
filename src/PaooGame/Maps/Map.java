@@ -10,20 +10,20 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
-enum Key {
-    found(1),
-    notFound(0);
-
-    private final int info;
-
-    Key(int info) {
-        this.info = info;
-    }
-
-    public int getInfo() {
-        return info;
-    }
-}
+//enum Key {
+//    found(1),
+//    notFound(0);
+//
+//    private final int info;
+//
+//    Key(int info) {
+//        this.info = info;
+//    }
+//
+//    public int getInfo() {
+//        return info;
+//    }
+//}
 
 /*! \class public class Map
     \brief Implementeaza notiunea de harta a jocului.
@@ -71,9 +71,6 @@ public class Map {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-    //    private int obstacleSize=48;
-//    boolean collisionDetected=false;
-//    List<Rectangle> obstacleColliders= new ArrayList<>();
 
 
     /*! \fn public Map(RefLinks refLink)
@@ -94,32 +91,7 @@ public class Map {
 
     }
 
-//    public void addChest() {
-//        for (int i = 0; i < height; i++) {
-//            for (int j = 0; j < width; j++) {
-//                if (tiles[i][j] == 5) {
-//                    Rectangle chest = new Rectangle(j * Tile.TILE_HEIGHT, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
-//                    if(hero.getBounds().intersects(chest))
-//                    {
-//
-//                    }
-//                }
-//            }
-//        }
-//    }
 
-//    public void findBladeX() //getX
-//    {
-//        for(int i=0;i<height;i++)
-//            for(int j=0;j<width;j++)
-//                if(tiles[i][j]==Tile.bladeTile.GetId())
-//                {
-//                    bladePozX=i;
-//                  //  bladePozY=j;
-//                }
-//
-//
-//    }
 
     public int findBladeY() //GetY
     {
@@ -138,6 +110,8 @@ public class Map {
         \brief Actualizarea hartii in functie de evenimente (un copac a fost taiat)
      */
     public void Update() {
+        //aici tb intrebat sau gandit mai intens
+
 //        for(int i=0;i<height;i++)
 //            for(int j=0;j<width;j++)
 //            {
@@ -151,7 +125,7 @@ public class Map {
 //
 //            }
         int y=findBladeY();
-        System.out.println(y);
+       // System.out.println(y);
     }
 
     /*! \fn public void Draw(Graphics g)
@@ -167,7 +141,7 @@ public class Map {
             {
 
                 Tile tile= GetTile(x,y);
-                tile.Draw(g,x* Tile.TILE_HEIGHT - Camera.getX(),y*Tile.TILE_HEIGHT- Camera.getY());
+                tile.Draw(g,x* Tile.TILE_HEIGHT - Camera.getX(),y*Tile.TILE_HEIGHT- Camera.getY()); //si aici tb intrebat
             }
 
         Font fnt0 = new Font("Monospaced", Font.BOLD,18);
@@ -232,7 +206,7 @@ public class Map {
         ///Se stabileste latimea hartii in numar de dale.
         try
         {
-            System.out.println("Hello World");
+          //  System.out.println("Hello World");
             Scanner sc = null;
             InputStream is = this.getClass().getResourceAsStream("/maps/harta.txt");
             InputStreamReader isr = new InputStreamReader(is);
@@ -334,9 +308,17 @@ public class Map {
         System.out.println(leftTile+" "+rightTile+" "+topTile+" "+bottomTile);
         System.out.println();
 
+
+        if(leftTile < 0) return true;
+        if(rightTile > 49) return true;
+        if(topTile < 0) return true;
+        if(bottomTile > 30) return true;
+
         // Verificăm dacă există vreo cifră 1 în zona de coliziune
-        for (int row = topTile; row <= bottomTile; row++) {
-            for (int col = leftTile; col <= rightTile; col++) {
+        for (int row = topTile; row <= bottomTile; row++)
+        {
+            for (int col = leftTile; col <= rightTile; col++)
+            {
                 if (obstacles[row][col] == 1) {
                     return true; // a avut loc o coliziune
                 }
@@ -344,14 +326,13 @@ public class Map {
         }
 
 
-        for (int row = topTile; row <= bottomTile; row++) {
-            for (int col = leftTile; col <= rightTile; col++) {
+        for (int row = topTile; row < bottomTile; row++) {
+            for (int col = leftTile; col < rightTile; col++) {
                 if (tiles[row][col] == 5) {
-                    switch (Key.found)
+                    switch (PaooGame.Items.Key.found)
                     {
                         case found:
                             System.out.println("intra in fct");
-
                             hasCol=true;
                             break;
                         case notFound:

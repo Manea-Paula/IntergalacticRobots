@@ -145,8 +145,8 @@ public class Hero2 extends Character
             }
             else
             {
-                yMove=150;
-                SetX(x+200);
+                yMove=42;
+                SetX(x);
 
             }
 
@@ -165,8 +165,8 @@ public class Hero2 extends Character
             }
             else
             {
-                yMove=150;
-                SetX(x+200);
+                yMove=-42;
+                SetX(x);
             }
         }
         else if(refLink.GetKeyManager2().left)
@@ -183,8 +183,8 @@ public class Hero2 extends Character
             }
             else
             {
-                xMove=150;
-                SetY(y+200);
+                xMove=42;
+                SetY(y);
             }
 
         }
@@ -201,8 +201,8 @@ public class Hero2 extends Character
             }
             else
             {
-                xMove=150;
-                SetY(y+200);
+                xMove=-42;
+                SetY(y);
             }
         }
 
