@@ -29,9 +29,10 @@ public class Hero extends Character
     private BufferedImage[] attackFrames;
     private int currentFrame; // Current animation frame
     private int animationSpeed; // Speed of animation
-    private boolean canMove = true; // Adaugare variabila canMove, presupun ca nu e coliziune
-    private boolean foundBattery = false; // Adaugare variabila canMove, presupun ca nu e coliziune
+    private boolean canMove = true; //  pt coliziune
+    private boolean foundBattery = true; // pt baterii
     Obstacol obstacol;
+    Hero hero2;
 
 
 
@@ -70,7 +71,7 @@ public class Hero extends Character
         currentFrame = 0;
         animationSpeed = 14;
 
-        this.obstacol=new Obstacol(refLink,150,150,48,48,80,600);
+  //      this.obstacol=new Obstacol(refLink,150,150,48,48,80,600);
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
 //        attackBounds.x = 10;
 //        attackBounds.y = 10;
@@ -143,9 +144,9 @@ public class Hero extends Character
             image = attackFrames[currentFrame / animationSpeed];
 
 
-            String soundUrl= this.getClass().getResource("/textures/AngryRobotBird.wav").getPath();
+          //  String soundUrl= this.getClass().getResource("/res/textures/AngryRobotBird.wav").getPath();
             // SoundManager.playSound("/home/paula/Documents/PaooGameEtapa2/res/textures/Angry Robot Bird.wav");
-            SoundManager.playSound(soundUrl);
+            //SoundManager.playSound(soundUrl);
         }
         else
         {
@@ -178,7 +179,7 @@ public class Hero extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
             System.out.println("up "+canMove);
             System.out.println(x+" "+(y+yMove));
             System.out.println();
@@ -195,6 +196,7 @@ public class Hero extends Character
 
            if(foundBattery)
            {
+               System.out.println("merge bine");
                speed+=0.2f;
            }
 
@@ -204,7 +206,7 @@ public class Hero extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
 //            System.out.println("down "+canMove);
 //            System.out.println(x+" "+(y+yMove));
 //            System.out.println();
@@ -221,6 +223,7 @@ public class Hero extends Character
 
             if(foundBattery)
             {
+                System.out.println("merge bine");
                 speed+=0.2f;
             }
         }
@@ -229,7 +232,7 @@ public class Hero extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
             System.out.println("left"+canMove);
             System.out.println((x+xMove)+" "+y);
             System.out.println();
@@ -247,6 +250,7 @@ public class Hero extends Character
 
             if(foundBattery)
             {
+                System.out.println("merge bine");
                 speed+=0.2f;
             }
 
@@ -256,7 +260,7 @@ public class Hero extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
             System.out.println("right"+canMove);
             System.out.println((x+xMove)+" "+y);
             System.out.println();
@@ -273,7 +277,17 @@ public class Hero extends Character
 
             if(foundBattery)
             {
+                System.out.println("merge bine");
                 speed+=0.2f;
+            }
+        }
+        else if(refLink.GetKeyManager().c)
+        {
+            Rectangle rchero2= getBounds();
+            if(getBounds().intersects(hero2.getBounds()))
+            {
+                System.out.println("ATAC");
+                hero2.life-=10;
             }
         }
 
@@ -321,21 +335,21 @@ public class Hero extends Character
         return new Rectangle((int)x,(int)y,width,height);
     }
 
-    public void intersectareSpike()
-    {
-        Rectangle rp=getBounds();
-        if(rp.intersects(obstacol.getBounds()))
-        {
-           // System.out.println("intra in fct");
-            life=life-5;
-        }
+//    public void intersectareSpike()
+//    {
+//        Rectangle rp=getBounds();
+//        if(rp.intersects(obstacol.getBounds()))
+//        {
+//            System.out.println("intra in fct");
+//            life=life-5;
+//        }
+//
+//        if(life<0)
+//        {
+//            System.out.println("Personaj mort");
+//        }
 
-        if(life<0)
-        {
-            System.out.println("Personaj mort");
-        }
-
-    }
+   //  }
 
 
 

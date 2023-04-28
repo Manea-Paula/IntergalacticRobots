@@ -5,8 +5,8 @@ import PaooGame.RefLinks;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 public class Obstacol extends Character {
     private static float DEFAULT_SPEED=1.2f;
@@ -22,7 +22,7 @@ public class Obstacol extends Character {
         this.startY = startY;
         this.endY = endY;
         try{
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/textures/blade.png")));
+            image = ImageIO.read(new File("src/res/textures/blade.png"));
         }
         catch(IOException e)
         {

@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 /*! \class public class Tile
     \brief Retine toate dalele intr-un vector si ofera posibilitatea regasirii dupa un id.
  */
+
 public class Tile
 {
     private static final int NO_TILES   = 32;
@@ -30,8 +31,8 @@ public class Tile
     public static Tile portalTile=new PortalTile(7);
     public static  Tile bladeTile=new BladeTile(8);
 
-    public static final int TILE_WIDTH  = 52;                       /*!< Latimea unei dale.*/
-    public static final int TILE_HEIGHT = 52;                       /*!< Inaltimea unei dale.*/
+    public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
+    public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/
 
     protected BufferedImage img;                                    /*!< Imaginea aferenta tipului de dala.*/
     protected final int id;                                         /*!< Id-ul unic aferent tipului de dala.*/

@@ -45,10 +45,10 @@ public class PlayState extends State
 
       // camera2=new CameraHero2(100,100);
         obstacol=new Obstacol(refLink,900,150,48,48,80,300);
-        obstacol2=new Obstacol(refLink,1300,150,48,48,60,300);
+     //   obstacol2=new Obstacol(refLink,1300,150,48,48,60,300);
 
         obstacolManager.addObstacle(obstacol);
-        obstacolManager.addObstacle(obstacol2);
+       // obstacolManager.addObstacle(obstacol2);
 
     }
 
@@ -64,7 +64,7 @@ public class PlayState extends State
         hero2.Update();
         //obstacol.Update();
 
-        hero.intersectareSpike();
+        //hero.intersectareSpike();
       //  chest.Update();
     //    camera.update();
         obstacolManager.updateObstacles();

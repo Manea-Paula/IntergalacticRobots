@@ -29,6 +29,8 @@ public class Hero2 extends Character
     private int currentFrame; // Current animation frame
     private int animationSpeed; // Speed of animation
     private boolean canMove=false;
+    private boolean foundBattery= true;
+    private boolean collisionOn=false;
 
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
@@ -66,6 +68,7 @@ public class Hero2 extends Character
         currentFrame = 0;
         animationSpeed = 14;
     }
+
 
     /*! \fn public void Update()
         \brief Actualizeaza pozitia si imaginea eroului.
@@ -109,9 +112,9 @@ public class Hero2 extends Character
             }
             image = attackFrames[currentFrame / animationSpeed];
 
-            String soundUrl= this.getClass().getResource("/textures/AngryRobotBird.wav").getPath();
+        //    String soundUrl= this.getClass().getResource("/res/textures/AngryRobotBird.wav").getPath();
            // SoundManager.playSound("/home/paula/Documents/PaooGameEtapa2/res/textures/Angry Robot Bird.wav");
-            SoundManager.playSound(soundUrl);
+          //  SoundManager.playSound(soundUrl);
         }
 
         else
@@ -136,6 +139,7 @@ public class Hero2 extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
             System.out.println("up"+canMove);
 //            System.out.println(x+""+(y+yMove);
 //
@@ -148,6 +152,12 @@ public class Hero2 extends Character
                 yMove=40;
                 SetX(x);
 
+            }
+
+            if(foundBattery)
+            {
+                System.out.println("merge bine 2");
+                speed+=0.2f;
             }
 
         }

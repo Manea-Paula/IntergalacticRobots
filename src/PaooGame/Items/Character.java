@@ -13,11 +13,11 @@ public abstract class Character extends Item
     public static final int DEFAULT_LIFE            = 100;   /*!< Valoarea implicita a vietii unui caracter.*/
     public static float DEFAULT_SPEED         = 1.9f; /*!< Viteza implicita a unu caracter.*/
     public static final int DEFAULT_SCORE         = 0; /*!< Viteza implicita a unu caracter.*/
-    public static final int DEFAULT_CREATURE_WIDTH  = 42;   /*!< Latimea implicita a imaginii caracterului.*/
-    public static final int DEFAULT_CREATURE_HEIGHT = 42;   /*!< Inaltimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_WIDTH  = 32;   /*!< Latimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_HEIGHT = 32;   /*!< Inaltimea implicita a imaginii caracterului.*/
 
-    public static int life;     /*!< Retine viata caracterului.*/
-    protected int score;
+    public static int life=10;     /*!< Retine viata caracterului.*/
+    public static int score=0;
     protected float speed;  /*!< Retine viteza de deplasare caracterului.*/
     protected float xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
     protected float yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
@@ -63,7 +63,8 @@ public abstract class Character extends Item
     public void MoveX()
     {
             ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa X.
-        x += xMove ;
+
+            x += xMove ;
     }
 
     /*! \fn public void MoveY()

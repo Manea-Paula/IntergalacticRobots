@@ -205,17 +205,15 @@ public class Game implements Runnable
 
             try {
                 // Creare stream audio
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("res/textures/backgroundMusic.wav"));
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/res/textures/backgroundMusic.wav"));
 
                 // Creare clip audio
                 music = AudioSystem.getClip();
                 music.open(audioInputStream);
 
                 // Setare volum
-                FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+             //   FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
                // gainControl.setValue(10.0f); // Reducem volumul cu 10 decibeli
-
-
 
                 // Reproducere în buclă
                 music.loop(Clip.LOOP_CONTINUOUSLY);
