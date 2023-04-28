@@ -35,10 +35,12 @@ public class Camera {
         int heroX = (int) h.GetX();
         int heroY = (int) h.GetY();
 
-        if(heroX > (float) width - 100){
+        if(heroX > (float) width - 100)
+        {
             cameraX = (int) (h.GetX()) - (width - 100);
         }
-        if(heroY > (float) height - 100){
+        if(heroY > (float) height - 100)
+        {
             cameraY = (int) (h.GetY()) - (height - 100);
         }
 

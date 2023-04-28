@@ -35,20 +35,8 @@ public class Assets
     public static BufferedImage water;
     public static BufferedImage flower;
     public static BufferedImage battery;
-    public static BufferedImage chest;
+    public static BufferedImage chest,button,fireball,blade,light;
     public static BufferedImage portal;
-    public static BufferedImage enemy;
-    public static BufferedImage blade;
-
-
-//    public static BufferedImage townGrass;
-//    public static BufferedImage townGrassDestroyed;
-//    public static BufferedImage townSoil;
-//    public static BufferedImage rockUp;
-//    public static BufferedImage rockDown;
-//    public static BufferedImage rockLeft;
-//    public static BufferedImage rockRight;
- //   public static BufferedImage tree;
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -62,7 +50,7 @@ public class Assets
         SpriteSheet sheet = new SpriteSheet(ImageLoader.LoadImage("src/res/textures/SpriteSheet.png"));
         SpriteSheet sheetPlayer1= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/player.png"));
         SpriteSheet sheetPlayer2= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/player2.png"));
-        SpriteSheet sheetItems= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/ITEMS.png"));
+        SpriteSheet sheetItems= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/itemsNou.png"));
     //    SpriteSheet en= new SpriteSheet(ImageLoader.LoadImage("/textures/enemy.png"));
 
             /// Se obtin subimaginile corespunzatoare elementelor necesare.
@@ -71,39 +59,7 @@ public class Assets
           water = sheet.crop(2, 0);
           grass = sheet.crop(3, 0);
           flower = sheet.crop(4, 0);
-//        mountain = sheet.crop(3, 0);
-//        townGrass = sheet.crop(0, 1);
-//        townGrassDestroyed = sheet.crop(1, 1);
-//        townSoil = sheet.crop(2, 1);
-//        tree = sheet.crop(3, 1);
 
-//        player1Idle_1=sheetPlayer1.crop(0,0);
-//        player1Idle_2=sheetPlayer1.crop(0,3);
-//        player1Idle_3=sheetPlayer1.crop(0,7);
-//        player1Right_1 = sheetPlayer1.crop(1, 0);
-//        player1Right_2 = sheetPlayer1.crop(1, 3);
-//        player1Right_3 = sheetPlayer1.crop(1, 7);
-//        player1Left_1 = sheetPlayer1.crop(2, 0);
-//        player1Left_2 = sheetPlayer1.crop(2, 3);
-//        player1Left_3 = sheetPlayer1.crop(2, 7);
-//        player1Up_1 =sheetPlayer1.crop(3,0);
-//        player1Up_2 =sheetPlayer1.crop(3,3);
-//        player1Up_3 =sheetPlayer1.crop(3,7);
-//        player1Down_1=sheetPlayer1.crop(4,0);
-//        player1Down_2=sheetPlayer1.crop(4,3);
-//        player1Down_3=sheetPlayer1.crop(4,7);
-
-//        player1Idle=sheetPlayer1.crop(1,0);
-//        player1Right = sheetPlayer1.crop(1, 0);
-//        player1Left = sheetPlayer1.crop(2, 0);
-//        player1Up =sheetPlayer1.crop(3,0);
-//        player1Down=sheetPlayer1.crop(4,0);
-//
-//        player2Idle=sheetPlayer2.crop(0,0);
-//        player2Right = sheetPlayer2.crop(1, 0);
-//        player2Left = sheetPlayer2.crop(2, 0);
-//        player2Up =sheetPlayer2.crop(3,0);
-//        player2Down=sheetPlayer2.crop(4,0);
 
         KevinIdle=sheetPlayer1.crop(0,0);
 
@@ -195,13 +151,12 @@ public class Assets
         chest=sheetItems.crop(0,0);
         battery=sheetItems.crop(1,0);
         portal=sheetItems.crop(2,0);
-     //   blade=sheetItems.crop(2,0);
+        button=sheetItems.crop(3,0);
+        light=sheetItems.crop(0,1);
+        fireball=sheetItems.crop(1,1);
+        blade=sheetItems.crop(2,1);
 
 
 
-//        rockUp = sheet.crop(2, 2);
-//        rockDown = sheet.crop(3, 2);
-//        rockLeft = sheet.crop(0, 3);
-//        rockRight = sheet.crop(1, 3);
     }
 }

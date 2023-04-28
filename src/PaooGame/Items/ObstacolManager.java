@@ -8,7 +8,7 @@ public class ObstacolManager {
 
     private static ObstacolManager instance;
 
-    private List<Obstacol> obstacole = new ArrayList<Obstacol>();
+    private List<ObstacolBlade> obstacole = new ArrayList<ObstacolBlade>();
 
     private ObstacolManager() {
         // Constructorul privat pentru a asigura crearea unei singure instanțe a acestei clase
@@ -21,22 +21,22 @@ public class ObstacolManager {
         return instance;
     }
 
-    public void addObstacle(Obstacol obstacol) {
+    public void addObstacle(ObstacolBlade obstacol) {
         obstacole.add(obstacol);
     }
 
-    public void removeObstacle(Obstacol obstacol) {
+    public void removeObstacle(ObstacolBlade obstacol) {
         obstacole.remove(obstacol);
     }
 
     public void updateObstacles() {
-        for (Obstacol obstacol : obstacole) {
+        for (ObstacolBlade obstacol : obstacole) {
             obstacol.Update();
         }
     }
 
     public void drawObstacles(Graphics g) {
-        for (Obstacol obstacol : obstacole) {
+        for (ObstacolBlade obstacol : obstacole) {
             obstacol.Draw(g);
         }
     }

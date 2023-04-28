@@ -18,20 +18,6 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-//enum Key {
-//    found(1),
-//    notFound(0);
-//
-//    private final int info;
-//
-//    Key(int info) {
-//        this.info = info;
-//    }
-//
-//    public int getInfo() {
-//        return info;
-//    }
-//}
 
 /*! \class public class Map
     \brief Implementeaza notiunea de harta a jocului.
@@ -50,114 +36,26 @@ public class Map {
     public static int width = 50;          /*!< Latimea hartii in numar de dale.*/
     public static int height = 31;         /*!< Inaltimea hartii in numar de dale.*/
     private int[][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
-//    int [][]obstacles={
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-//
-
 
     /*! \fn public Map(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
 
         \param refLink O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
      */
-    public Map(RefLinks refLink) {
+    public Map(RefLinks refLink)
+    {
         /// Retine referinta "shortcut".
         this.refLink = refLink;
 
-
         ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
-        LoadWorld();
-      //  score=0;
-    //    addChest();
-        //    addObstacle();
-
+        LoadWorld(1);
     }
-
-
-
-//    public int findBladeY() //GetY
-//    {
-//        for(int i=0;i<height;i++)
-//            for(int j=0;j<width;j++)
-//                if(tiles[i][j]==Tile.portalTile.GetId()) //blade is 8, incerc cu portal care e 7
-//                {
-//                   // bladePozX=i;
-//                    bladePozY=j;
-//                }
-//
-//        return bladePozY;
-//    }
 
     /*! \fn public  void Update()
         \brief Actualizarea hartii in functie de evenimente (un copac a fost taiat)
      */
-    public void Update()  {
-        //aici tb intrebat sau gandit mai intens
-
-//        for(int i=0;i<height;i++)
-//            for(int j=0;j<width;j++)
-//            {
-//                while(j<width)
-//                {
-//                    int poz=findBladeY();
-//                    tiles[i][poz]=0;
-//                    tiles[i][poz+1]=;
-//                }
-//
-//
-//            }
-       // int y=findBladeY(); //iau poz initiala
-
-//        for(int i=0;i<height;i++)
-//            for(int j=0;j<width;j++)
-//            {
-//                if(tiles[i][j]==7)
-//                {
-//                    try{
-//                        TimeUnit.SECONDS.sleep(1);
-//                        tiles[i+1][j]=tiles[i][j];
-//                    }
-//                    catch(InterruptedException e)
-//                    {
-//                      e.printStackTrace();
-//                    }
-//
-//
-//                }
-//
-//            }
-//       // System.out.println(y);
-
+    public void Update()
+    {
 
     }
 
@@ -243,48 +141,87 @@ public class Map {
 
     /*! \fn private void LoadWorld()
         \brief Functie de incarcare a hartii jocului.
-        Aici se poate genera sau incarca din fisier harta. Momentan este incarcata static.
+        Aici se poate genera sau incarca din fisier harta
      */
-    private void LoadWorld() {
+    private void LoadWorld(int id)
+    {
         //atentie latimea si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
         //se poate implementa notiunea de camera/cadru de vizualizare al hartii
         ///Se stabileste latimea hartii in numar de dale.
-        try
+
+        switch (id)
         {
-          //  System.out.println("Hello World");
-            Scanner sc = new Scanner(new File("src/res/maps/harta.txt"));
-            int rows = 31;
-            int columns = 50;
-            int [][] harta = new int[rows][columns];
-            while(sc.hasNextLine()) {
-                for (int i=0; i<harta.length; i++) {
-                    String[] line = sc.nextLine().trim().split(" ");
-                    for (int j=0; j<line.length; j++) {
-                        harta[i][j] = Integer.parseInt(line[j]);
+            case 1:
+                try
+                {
+                    Scanner sc = new Scanner(new File("src/res/maps/harta.txt"));
+                    int rows = 31;
+                    int columns = 50;
+                    int [][] harta = new int[rows][columns];
+                    while(sc.hasNextLine()) {
+                        for (int i=0; i<harta.length; i++) {
+                            String[] line = sc.nextLine().trim().split(" ");
+                            for (int j=0; j<line.length; j++) {
+                                harta[i][j] = Integer.parseInt(line[j]);
+                            }
+                        }
                     }
+                    tiles = harta;
+//            System.out.println(Arrays.deepToString(harta));
+
                 }
-            }
-            tiles = harta;
-            System.out.println(Arrays.deepToString(harta));
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                    // daca incarc prost harta din fisier, fct o restaurez pe harta statica
+                    width = 50;
+                    height = 31;
+                    tiles = new int[width][height];
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width; x++) {
+                            tiles[x][y] = Level1(y, x);
+                        }
+                    }
 
+                }
+                break;
 
+            case 2:
+                try
+                {
+                    Scanner sc = new Scanner(new File("src/res/maps/hartaNivel2.txt"));
+                    int rows = 31;
+                    int columns = 50;
+                    int [][] harta = new int[rows][columns];
+                    while(sc.hasNextLine()) {
+                        for (int i=0; i<harta.length; i++) {
+                            String[] line = sc.nextLine().trim().split(" ");
+                            for (int j=0; j<line.length; j++) {
+                                harta[i][j] = Integer.parseInt(line[j]);
+                            }
+                        }
+                    }
+                    tiles = harta;
+//                  System.out.println(Arrays.deepToString(harta));
+
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                    // daca incarc prost harta din fisier, fct o restaurez pe harta statica
+                    width = 50;
+                    height = 31;
+                    tiles = new int[width][height];
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width; x++) {
+                            tiles[x][y] = Level2(y, x);
+                        }
+                    }
+
+                }
+                break;
 
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            // daca incarc prost harta din fisier, fct o restaurez pe harta statica
-            width = 50;
-            height = 31;
-            tiles = new int[width][height];
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    tiles[x][y] = MiddleEastMap(y, x);
-                }
-            }
-
-        }
-
 
     }
 
@@ -295,7 +232,7 @@ public class Map {
         \param x linia pe care se afla codul dalei de interes.
         \param y coloana pe care se afla codul dalei de interes.
      */
-    private int MiddleEastMap(int x, int y) {
+    private int Level1(int x, int y) {
         ///Definire statica a matricei de coduri de dale.
         final int map[][] = {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -331,11 +268,17 @@ public class Map {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
 
-
         return map[x][y];
 
+    }
 
-
+    private int Level2(int x,int y)
+    {
+        final int map[][]={
+                {0,0,0,0},
+                {0,0,0,0}
+        };
+        return map[x][y];
     }
 
     public int getWidth(){return width;}

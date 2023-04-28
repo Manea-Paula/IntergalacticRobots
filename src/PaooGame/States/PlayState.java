@@ -16,10 +16,8 @@ public class PlayState extends State
     private Hero2 hero2;
     private static Map map;    /*!< Referinta catre harta curenta.*/
     private Camera camera;
-    private Obstacol obstacol,obstacol2;
-  //  private Chest chest;
+    private ObstacolBlade obstacol,obstacol2;
     ObstacolManager obstacolManager = ObstacolManager.getInstance();
- //   private CameraHero2 camera2;
 
     /*! \fn public PlayState(RefLinks refLink)
         \brief Constructorul de initializare al clasei
@@ -37,18 +35,18 @@ public class PlayState extends State
 
             ///Construieste eroul + camera
         camera=new Camera(0,0);
-        hero = new Hero(refLink,100, 100);
-        hero2= new Hero2(refLink,120,150);
+        hero = new Hero(refLink,300, 500);
+        hero2= new Hero2(refLink,220,350);
 
         //chest= new Chest(refLink,415,265,50,50);
       //  camera=new Camera(0,0,960,680,hero,hero2);
 
       // camera2=new CameraHero2(100,100);
-        obstacol=new Obstacol(refLink,900,150,48,48,80,300);
-     //   obstacol2=new Obstacol(refLink,1300,150,48,48,60,300);
+        obstacol=new ObstacolBlade(refLink,900,150,48,48,70,520);
+        obstacol2=new ObstacolBlade(refLink,600,150,48,48,40,530);
 
         obstacolManager.addObstacle(obstacol);
-       // obstacolManager.addObstacle(obstacol2);
+        obstacolManager.addObstacle(obstacol2);
 
     }
 
@@ -70,7 +68,7 @@ public class PlayState extends State
         obstacolManager.updateObstacles();
      //   camera2.centerOnEntity(hero2);
         camera.centerOnEntity(hero);
-        obstacol.Update();
+       // obstacol.Update();
 
     }
 
@@ -88,7 +86,7 @@ public class PlayState extends State
         obstacolManager.drawObstacles(g);
         hero2.Draw(g);
         //chest.Draw(g);
-        obstacol.Draw(g);
+       // obstacol.Draw(g);
    //     camera.draw(g);
       //  g.translate((int) camera.getxOffset(), (int) camera.getyOffset());
     }

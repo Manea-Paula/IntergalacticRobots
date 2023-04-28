@@ -2,7 +2,6 @@ package PaooGame.Items;
 
 import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
-import PaooGame.Sound.SoundManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -31,7 +30,7 @@ public class Hero extends Character
     private int animationSpeed; // Speed of animation
     private boolean canMove = true; //  pt coliziune
     private boolean foundBattery = true; // pt baterii
-    Obstacol obstacol;
+    ObstacolBlade obstacol;
     Hero hero2;
 
 
