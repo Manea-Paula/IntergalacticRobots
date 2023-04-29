@@ -28,9 +28,9 @@ public class Hero2 extends Character
     private BufferedImage[] attackFrames;
     private int currentFrame; // Current animation frame
     private int animationSpeed; // Speed of animation
-    private boolean canMove=false;
+    private boolean canMove=true;
     private boolean foundBattery= true;
-    private boolean collisionOn=false;
+    private boolean foundChest=true;
 
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
@@ -140,6 +140,7 @@ public class Hero2 extends Character
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            foundChest=refLink.GetMap().checkCollisionWithChest(x,y+yMove,DEFAULT_CREATURE_WIDTH);
             System.out.println("up"+canMove);
 //            System.out.println(x+""+(y+yMove);
 //
@@ -160,13 +161,19 @@ public class Hero2 extends Character
                 speed+=0.2f;
             }
 
+            if(foundChest)
+            {
+                System.out.println("gasit cufar");
+            }
+
         }
         else if(refLink.GetKeyManager2().down)
         {
 
-
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+
             System.out.println("down"+canMove);
 
             if(canMove==false) //nu e coliziune
@@ -178,6 +185,11 @@ public class Hero2 extends Character
                 yMove=-40;
                 SetX(x);
             }
+
+            if(foundChest)
+            {
+                System.out.println("gasit cufar");
+            }
         }
         else if(refLink.GetKeyManager2().left)
         {
@@ -185,6 +197,8 @@ public class Hero2 extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
+            foundChest=refLink.GetMap().checkCollisionWithChest(x,x+xMove,DEFAULT_CREATURE_HEIGHT);
             System.out.println("left"+canMove);
 
             if(canMove==false) //nu e coliziune
@@ -197,12 +211,26 @@ public class Hero2 extends Character
                 SetY(y);
             }
 
+            if(foundBattery)
+            {
+                System.out.println("merge bine");
+                speed+=0.2f;
+            }
+
+            if(foundChest)
+            {
+                System.out.println("gasit cufar");
+                keys++;
+            }
+
         }
         else if(refLink.GetKeyManager2().right)
         {
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
+            foundChest=refLink.GetMap().checkCollisionWithChest(x+xMove,y,DEFAULT_CREATURE_WIDTH);
             System.out.println("right"+canMove);
 
             if(canMove==false) //nu e coliziune
@@ -214,7 +242,24 @@ public class Hero2 extends Character
                 xMove=-40;
                 SetY(y);
             }
+
+            if(foundBattery)
+            {
+                System.out.println("merge bine");
+                speed+=0.1f;
+            }
+
+            if(foundChest)
+            {
+                System.out.println("gasit cufar");
+                keys++;
+            }
         }
+        else
+            if(refLink.GetKeyManager2().p)
+            {
+                System.out.println("atac");
+            }
 
         // Actualizare pozitie erou in cazul in care variabila canMove este false aka fara coliziune
         if (canMove==false)

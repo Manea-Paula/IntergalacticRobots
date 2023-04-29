@@ -31,7 +31,7 @@ public class ObstacolBlade extends Character {
         bounds.width=width;
         bounds.height=height;
 
-        life=10;
+      //  life=10;
     }
 
     @Override

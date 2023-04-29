@@ -156,7 +156,5 @@ public class Assets
         fireball=sheetItems.crop(1,1);
         blade=sheetItems.crop(2,1);
 
-
-
     }
 }

@@ -30,9 +30,8 @@ public class Hero extends Character
     private int animationSpeed; // Speed of animation
     private boolean canMove = true; //  pt coliziune
     private boolean foundBattery = true; // pt baterii
-    ObstacolBlade obstacol;
+    private boolean foundChest=true; //pt chei
     Hero hero2;
-
 
 
 //    private int cameraX=DEFAULT_CREATURE_WIDTH;
@@ -179,6 +178,7 @@ public class Hero extends Character
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            foundChest=refLink.GetMap().checkCollisionWithChest(x,y+yMove,DEFAULT_CREATURE_WIDTH);
             System.out.println("up "+canMove);
             System.out.println(x+" "+(y+yMove));
             System.out.println();
@@ -197,6 +197,11 @@ public class Hero extends Character
            {
                System.out.println("merge bine");
                speed+=0.2f;
+           }
+
+           if(foundChest)
+           {
+               System.out.println("gasit cufar");
            }
 
         }
@@ -224,6 +229,12 @@ public class Hero extends Character
             {
                 System.out.println("merge bine");
                 speed+=0.2f;
+            }
+
+            if(foundChest)
+            {
+                System.out.println("gasit cufar");
+                keys++;
             }
         }
         else if(refLink.GetKeyManager().left)
@@ -253,6 +264,12 @@ public class Hero extends Character
                 speed+=0.2f;
             }
 
+            if(foundChest)
+            {
+                System.out.println("gasit cufar");
+                keys++;
+            }
+
         }
         else if(refLink.GetKeyManager().right)
         {
@@ -260,6 +277,7 @@ public class Hero extends Character
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
+            foundChest=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
             System.out.println("right"+canMove);
             System.out.println((x+xMove)+" "+y);
             System.out.println();
@@ -277,7 +295,13 @@ public class Hero extends Character
             if(foundBattery)
             {
                 System.out.println("merge bine");
-                speed+=0.2f;
+                speed+=0.1f;
+            }
+
+            if(foundChest)
+            {
+                System.out.println("gasit cufar");
+                keys++;
             }
         }
         else if(refLink.GetKeyManager().c)

@@ -1,7 +1,6 @@
 package PaooGame.Maps;
 
 import PaooGame.InfoBox;
-import PaooGame.Items.Battery;
 import PaooGame.Items.Character;
 import PaooGame.Items.Hero;
 import PaooGame.Items.Key;
@@ -24,12 +23,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class Map {
     private Key key;
-    private Battery battery;
-    public boolean hasCol=false;
-    public boolean hasBattery=false;
-    public static int score;
-    public static float speed=1.9f;
-    public int bladePozX,bladePozY;
+    public boolean hasChest=false;
+    public boolean hasBattery=false;;
 
     public static Graphics g;
     private RefLinks refLink;   /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
@@ -88,14 +83,14 @@ public class Map {
             throw new RuntimeException(e);
         }
 
-        if(hasCol)
+        if(hasChest)
         {
-            System.out.println(hasCol);
+            System.out.println(hasChest);
            // Character.score++;
-            //g.drawString("Key Players "+(Character.score+1),810,19);
+            g.drawString("Key Players "+(Character.score+1),810,19);
 
             //Character.score+=1;
-            InfoBox.ShowInfo("You have found one more key!","KeyPlayers");
+           // InfoBox.ShowInfo("You have found one more key!","KeyPlayers");
 
          //   g.drawString("Speed"+(Hero2.speed),10,19);
         }
@@ -104,7 +99,6 @@ public class Map {
         {
             System.out.println("hasBattery"+hasBattery);
             g.drawString("Life "+(Hero.life),10,19);
-
         }
 
 
@@ -275,8 +269,13 @@ public class Map {
     private int Level2(int x,int y)
     {
         final int map[][]={
-                {0,0,0,0},
-                {0,0,0,0}
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         };
         return map[x][y];
     }
@@ -284,7 +283,35 @@ public class Map {
     public int getWidth(){return width;}
     public  int getHeight(){return height;}
 
+    public void loadothermap(float x, float y, int playerSize)
+    {
+        int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
+        int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
+        int topTile = (int) (y - playerSize / 2) / Tile.TILE_WIDTH;
+        int bottomTile = (int) (y + playerSize / 2) / Tile.TILE_WIDTH;
+        System.out.println(leftTile+" "+rightTile+" "+topTile+" "+bottomTile);
+        System.out.println();
 
+//
+//        if(leftTile < 0) return true;
+//        if(rightTile > 49) return true;
+//        if(topTile < 0) return true;
+//        if(bottomTile > 30) return true;
+
+        // Verificăm dacă există vreo cifră 1 în zona de coliziune
+        for (int row = topTile; row <= bottomTile; row++)
+        {
+            for (int col = leftTile; col <= rightTile; col++)
+            {
+                if (tiles[row][col] == 7) {
+                    LoadWorld(2);
+                }
+            }
+        }
+
+
+
+    }
     public boolean checkCollisionWithObstacles(float x, float y, int playerSize) {
         int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
         int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
@@ -348,12 +375,14 @@ public class Map {
                         {
                             case found:
                                 System.out.println("intra in fct");
-                                hasCol=true;
+                                hasChest=true;
+                                tiles[row][col]=0;
                                 break;
                             case notFound:
                                 System.out.println("No key found with info: " + PaooGame.Items.Key.notFound.getInfo());
                                 //  hero.score=0;
-                                hasCol=false;
+                                hasChest=false;
+                                tiles[row][col]=3;                                                      ;
                                 break;
                         }
                     return true;
@@ -367,16 +396,6 @@ public class Map {
 
     public boolean checkCollisionWithBattery(float x, float y, int playerSize) {
 
-        Random random = new Random();
-        int randomNumber = random.nextInt(2);
-        if (randomNumber == 0)
-        {
-            battery = Battery.good;
-        }
-        else
-        {
-            battery=battery.bad;
-        }
        // System.out.println("baterii");
         int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
         int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
@@ -390,34 +409,13 @@ public class Map {
                 if(tiles[row][col]==6)
                 {
 
-                    switch(battery)
-                    {
-                        case good:
-                            System.out.println("baterie +");
-                            hasBattery=true;
-                            break;
-                        case bad:
-                            System.out.println("baterie -");
-                            hasBattery=false;
-                            break;
+                    System.out.println("baterie");
+                    tiles[row][col]=0;
 
-                    }
-                    System.out.println("speed increased");
-                    //Hero hero;
-                    //Hero.speed+=2.5f;
-                   // Hero.life+=10;
-                    //hasBattery=true;
                     return true;
                 }
 
 
-//                if(tiles[row][col]==7)
-//                {
-//                 //   speed-=0.5f;
-//                    Hero.life-=10;
-//                    hasBattery=true;
-//                    return  true;
-//                }
 
             }
         }
