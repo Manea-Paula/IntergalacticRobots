@@ -38,10 +38,7 @@ public class RefLinks
         return game.GetKeyManager2();
     }
 
-    public KeyState GetKeyManagerState()
-    {
-        return game.GetKeyManager3();
-    }
+    public KeyState GetKeyManagerState() {return game.GetKeyManager3();}
 
     /*! \fn public int GetWidth()
         \brief Returneaza latimea ferestrei jocului.

@@ -112,6 +112,7 @@ public class Game implements Runnable
             ///Construirea obiectului de gestiune a evenimentelor de tastatura
         keyManager = new KeyPlayer1();
         keyManager2 =new KeyPlayer2();
+        keyState= new KeyState();
         state=new MenuState(refLink);
 
     }
@@ -132,6 +133,7 @@ public class Game implements Runnable
             ///Sa ataseaza ferestrei managerul de tastatura pentru a primi evenimentele furnizate de fereastra.
         wnd.GetWndFrame().addKeyListener(keyManager);
         wnd.GetWndFrame().addKeyListener(keyManager2);
+        wnd.GetWndFrame().addKeyListener(keyState);
             ///Se incarca toate elementele grafice (dale)
         Assets.Init();
             ///Se construieste obiectul de tip shortcut ce va retine o serie de referinte catre elementele importante din program.
@@ -144,7 +146,7 @@ public class Game implements Runnable
         aboutState      = new AboutState(refLink);
         //currentState=menuState;
             ///Seteaza starea implicita cu care va fi lansat programul in executie
-        State.SetState(playState);
+        State.SetState(menuState);
     }
 
     /*! \fn public void run()
@@ -276,6 +278,7 @@ public class Game implements Runnable
             ///Determina starea tastelor
         keyManager.Update();
         keyManager2.Update();
+        keyState.Update();
         ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, atentie trebuie sa fie diferita de null.
         if(State.GetState() != null)
         {
@@ -315,7 +318,6 @@ public class Game implements Runnable
         g = bs.getDrawGraphics();
             /// Se sterge ce era
         g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
-
 
 
         /// operatie de desenare

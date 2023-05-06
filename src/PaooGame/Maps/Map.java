@@ -283,7 +283,7 @@ public class Map {
     public int getWidth(){return width;}
     public  int getHeight(){return height;}
 
-    public void loadothermap(float x, float y, int playerSize)
+    public boolean loadothermap(float x, float y, int playerSize)
     {
         int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
         int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
@@ -303,13 +303,15 @@ public class Map {
         {
             for (int col = leftTile; col <= rightTile; col++)
             {
-                if (tiles[row][col] == 7) {
+                if (tiles[row][col] == 7)
+                {
                     LoadWorld(2);
+                    return true;
                 }
             }
         }
 
-
+        return false;
 
     }
     public boolean checkCollisionWithObstacles(float x, float y, int playerSize) {

@@ -2,8 +2,14 @@ package PaooGame.States;
 
 import PaooGame.RefLinks;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
 
 /*! \class public class MenuState extends State
     \brief Implementeaza notiunea de menu pentru joc.
@@ -18,24 +24,21 @@ public class MenuState extends State
     private BufferedImage background;
     private String[] options;
     private int selectedItem;
-    private RefLinks refLinks;
+//    private RefLinks refLinks;
+//    public Rectangle playButton = new Rectangle(400, 250,150,50);
+//    public Rectangle settingsButton = new Rectangle(400, 350,150,50);
+//    public Rectangle aboutButton = new Rectangle(400, 450,150,50);
 
     public MenuState(RefLinks refLink)
     {
             ///Apel al constructorului clasei de baza.
         super(refLink);
-        options = new String[]{"Start Game", "Settings", "Exit"};
+        options = new String[]{"Play", "Settings", "Exit"};
 
         ///Seteaza elementul selectat la prima optiune.
         selectedItem = 0;
 
-//        try{
-//            background = ImageIO.read(getClass().getResourceAsStream("/textures/bkg.png"));
-//        }
-//        catch(IOException e)
-//        {
-//            e.printStackTrace();
-//        }
+
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
@@ -43,26 +46,26 @@ public class MenuState extends State
     @Override
     public void Update()
     {
-        if(refLinks.GetKeyManagerState().up)
+        if(refLink.GetKeyManagerState().up)
         {
             MoveUp();
         }
-        if(refLinks.GetKeyManagerState().down)
+        if(refLink.GetKeyManagerState().down)
         {
             MoveDown();
         }
-        if(refLinks.GetKeyManagerState().enter)
+        if(refLink.GetKeyManagerState().enter)
         {
             //execute the selected menu option
             switch(selectedItem)
             {
                 case 0: //start game
                     //change the game state to the play state
-                    refLinks.GetGame().SetState(new PlayState(refLinks));
+                    refLink.GetGame().SetState(new PlayState(refLink));
                     break;
                 case 1: //settings
                     //change the game state to the settings state
-                    refLinks.GetGame().SetState(new SettingsState(refLinks));
+                    refLink.GetGame().SetState(new SettingsState(refLink));
                     break;
                 case 2: //exit
                     //exit the game
@@ -71,9 +74,9 @@ public class MenuState extends State
             }
         }
 
-        if(refLinks.GetKeyManagerState().escape)
+        if(refLink.GetKeyManagerState().escape)
         {
-            refLinks.GetGame().SetState(new SettingsState(refLinks));
+            refLink.GetGame().SetState(new SettingsState(refLink));
         }
 
 
@@ -87,11 +90,21 @@ public class MenuState extends State
     @Override
     public void Draw(Graphics g)
     {
-        g.drawRect(200,200,200,500);
+//        try{
+//            background = ImageIO.read(new File("src/res/textures/bkg.png"));
+//        }
+//        catch(IOException e)
+//        {
+//            e.printStackTrace();
+//        }
+
+      //  Graphics2D g2d= (Graphics2D)g;
+      //  g.drawRect(200,200,960,680);
         ///Seteaza fontul si culoarea de afisare.
         Font font = new Font("Arial", Font.BOLD, 48);
         g.setFont(font);
-        g.setColor(Color.white);
+        g.setColor(Color.black);
+        g.drawString("Robots' intergalactic adventure",140,200);
 
         ///Deseneaza optiunile meniului.
         for(int i = 0; i < options.length; i++) {
@@ -102,12 +115,22 @@ public class MenuState extends State
             else {
                 g.setColor(Color.white);
             }
-            g.drawString(options[i], refLinks.GetWidth() / 2 - g.getFontMetrics().stringWidth(options[i]) / 2, 250 + i * 100);
+            g.drawString(options[i], refLink.GetWidth() / 2 - g.getFontMetrics().stringWidth(options[i]) / 2, 250 + i * 100);
         }
-
+//        Font fnt1 = new Font("arial",Font.BOLD,30);
+//        g.setFont(fnt1);
+//        g.setColor(Color.red);
+//        g.drawString("Play", playButton.x+39, playButton.y+33);
+//        g2d.draw(playButton);
+//        g.setColor(Color.orange);
+//        g.drawString("Settings", settingsButton.x+19, settingsButton.y+33);
+//        g2d.draw(settingsButton);
+//        g.setColor(Color.blue);
+//        g.drawString("About", aboutButton.x+29, aboutButton.y+33);
+//        g2d.draw(aboutButton);
     }
 
-    //ma mut mai sus in meniu cu o pozitie
+//    //ma mut mai sus in meniu cu o pozitie
     private void MoveUp() {
         selectedItem--;
         if(selectedItem < 0) {
@@ -129,6 +152,5 @@ public class MenuState extends State
     {
 
     }
-
 
 }

@@ -31,6 +31,7 @@ public class Hero extends Character
     private boolean canMove = true; //  pt coliziune
     private boolean foundBattery = true; // pt baterii
     private boolean foundChest=true; //pt chei
+    private boolean mapanoua=true;
     Hero hero2;
 
 
@@ -179,6 +180,8 @@ public class Hero extends Character
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
             foundChest=refLink.GetMap().checkCollisionWithChest(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+
             System.out.println("up "+canMove);
             System.out.println(x+" "+(y+yMove));
             System.out.println();
@@ -202,6 +205,11 @@ public class Hero extends Character
            if(foundChest)
            {
                System.out.println("gasit cufar");
+           }
+
+           if(mapanoua)
+           {
+               System.out.println("MAPA NOUA");
            }
 
         }
