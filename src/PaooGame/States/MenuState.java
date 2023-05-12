@@ -65,7 +65,8 @@ public class MenuState extends State
     @Override
     public void Draw(Graphics g)
     {
-        try{
+        try
+        {
             background = ImageIO.read(new File("src/res/textures/bkg.png"));
         }
         catch(IOException e)
@@ -75,7 +76,7 @@ public class MenuState extends State
 
         g.drawImage(background,0,0,960,680,null);
 
-        Graphics2D g2d= (Graphics2D)g;
+     //   Graphics2D g2d= (Graphics2D)g;
      //   g.drawRect(200,200,960,680);
         ///Seteaza fontul si culoarea de afisare.
         Font font = new Font("Arial", Font.BOLD, 48);
@@ -83,8 +84,9 @@ public class MenuState extends State
         g.setColor(Color.CYAN);
         g.drawString("Robots' intergalactic adventure",140,100);
 
-        ///Deseneaza optiunile meniului.
-        for(int i = 0; i < options.length; i++) {
+        //Deseneaza optiunile meniului.
+        for(int i = 0; i < options.length; i++)
+        {
             ///Daca optiunea curenta este selectata, se afiseaza cu o culoare diferita.
             if(i == selectedItem) {
                 g.setColor(Color.black);
@@ -108,22 +110,27 @@ public class MenuState extends State
     }
 
 //    //ma mut mai sus in meniu cu o pozitie
-    private void MoveUp() {
+    private void MoveUp()
+    {
         System.out.println("move up");
 
-        selectedItem--;System.out.println(selectedItem);
-        if(selectedItem < 0) {
+        selectedItem--;
+        System.out.println(selectedItem);
+        if(selectedItem < 0)
+        {
             selectedItem = options.length - 1;
         }
     }
 
     //ma mut mai jos in meniu cu o pozitie
 
-    private void MoveDown() {
+    private void MoveDown()
+    {
         System.out.println("move down");
         selectedItem++;
         System.out.println(selectedItem);
-        if(selectedItem >= options.length) {
+        if(selectedItem >= options.length)
+        {
             selectedItem = 0;
         }
     }
@@ -148,7 +155,6 @@ public class MenuState extends State
                 case 0: //start game
                     //change the game state to the play state
                     State.SetState(new PlayState(refLink));
-
                     break;
                 case 1: //settings
                     //change the game state to the settings state

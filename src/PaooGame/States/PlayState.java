@@ -99,7 +99,8 @@ public class PlayState extends State
     {
         if(refLink.GetKeyManagerState().escape)
         {
-            refLink.GetGame().SetState(new MenuState(refLink));
+            //refLink.GetGame().SetState(new MenuState(refLink));
+            State.SetState(new MenuState(refLink));
         }
     }
 }

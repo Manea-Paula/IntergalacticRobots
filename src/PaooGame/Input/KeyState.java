@@ -10,6 +10,9 @@ public class KeyState implements KeyListener {
     public boolean up;
     public boolean down;  /*!< Flag pentru tasta "dreapta" apasata.*/
     public boolean escape;
+    public boolean p;
+    public boolean m;
+
 
     /*! \fn public KeyManager()
         \brief Constructorul clasei.
@@ -27,6 +30,9 @@ public class KeyState implements KeyListener {
         up=keys[KeyEvent.VK_UP];
         down=keys[KeyEvent.VK_DOWN];
         escape=keys[KeyEvent.VK_ESCAPE];
+        p=keys[KeyEvent.VK_P];
+        m=keys[KeyEvent.VK_M];
+
     }
 
     /*! \fn public void keyPressed(KeyEvent e)
