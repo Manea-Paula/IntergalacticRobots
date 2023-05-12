@@ -1,6 +1,7 @@
 package PaooGame.Items;
 
 import PaooGame.Graphics.Assets;
+import PaooGame.InfoBox;
 import PaooGame.RefLinks;
 
 import java.awt.*;
@@ -29,14 +30,11 @@ public class Hero extends Character
     private int currentFrame; // Current animation frame
     private int animationSpeed; // Speed of animation
     private boolean canMove = true; //  pt coliziune
-    private boolean foundBattery = true; // pt baterii
+ //   private boolean foundBattery = true; // pt baterii
     private boolean foundChest=true; //pt chei
     private boolean mapanoua=true;
+    private boolean foundBattery=true;
     Hero hero2;
-
-
-//    private int cameraX=DEFAULT_CREATURE_WIDTH;
-//    private int cameraY=DEFAULT_CREATURE_HEIGHT;
 
 
     /*! \fn public Hero(RefLinks refLink, float x, float y)
@@ -58,14 +56,11 @@ public class Hero extends Character
         normalBounds.width = 16;
         normalBounds.height = 32;
 
-
-        // Load images for character motion
         upFrames = new BufferedImage[] { Assets.KevinUp1, Assets.KevinUp2,Assets.KevinUp3,Assets.KevinUp4,Assets.KevinUp5,Assets.KevinUp6};
         downFrames = new BufferedImage[] { Assets.KevinDown1, Assets.KevinDown2,Assets.KevinDown3,Assets.KevinDown4,Assets.KevinDown5,Assets.KevinDown6};
         leftFrames = new BufferedImage[] { Assets.KevinLeft1, Assets.KevinLeft2, Assets.KevinLeft3,Assets.KevinLeft4,Assets.KevinLeft5,Assets.KevinLeft6};
         rightFrames = new BufferedImage[] { Assets.KevinRight1, Assets.KevinRight2 ,Assets.KevinRight3,Assets.KevinRight4,Assets.KevinRight5,Assets.KevinRight6};
         attackFrames= new BufferedImage[] {Assets.KevinAttack2,Assets.KevinAttack3,Assets.KevinAttack4,Assets.KevinAttack5,Assets.KevinAttack6};
-
 
         currentFrame = 0;
         animationSpeed = 14;
@@ -89,26 +84,6 @@ public class Hero extends Character
         GetInput();
             ///Actualizeaza pozitia
        Move();
-//        float newX=x+speed;
-//        float newY=y+speed; //->pt functia de isCollision
-//
-//        if(map.checkMapCollision(bounds))
-//        {
-//            System.out.println(" CEVA ");
-//            xMove=0;
-//            yMove=0;
-//        }
-
-//        if(!map.isCollision((int) newX, (int) newY))
-//        {
-//            x=newX;
-//            y=newY;
-//        }
-//        else
-//        {
-//            Move();
-//        }
-
             ///Actualizeaza imaginea
         if (refLink.GetKeyManager().up == true) {
             currentFrame++;
@@ -153,14 +128,6 @@ public class Hero extends Character
             image = Assets.KevinIdle;
         }
 
-      //  System.out.println(x+" "+y);
-       // cameraX=x-400;
-//        if(refLink.GetKeyManager().c==true)
-//        {
-//            System.out.println("ceva "+x+" "+y);
-//            PlayState.map.GetBattery((int)x,(int)y);
-//        }
-
 
     }
 
@@ -175,11 +142,10 @@ public class Hero extends Character
 
         if(refLink.GetKeyManager().up)
         {
-
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
-            foundChest=refLink.GetMap().checkCollisionWithChest(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().collisionBattery(getBounds());
+            foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
             mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
 
             System.out.println("up "+canMove);
@@ -199,12 +165,14 @@ public class Hero extends Character
            if(foundBattery)
            {
                System.out.println("merge bine");
-               speed+=0.2f;
+               speed+=0.5f;
            }
+
 
            if(foundChest)
            {
                System.out.println("gasit cufar");
+      //         InfoBox.ShowInfo("Ai gasit o cheie","Chei");
            }
 
            if(mapanoua)
@@ -215,10 +183,10 @@ public class Hero extends Character
         }
         else if(refLink.GetKeyManager().down)
         {
-
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().collisionBattery(getBounds());
+            foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
 //            System.out.println("down "+canMove);
 //            System.out.println(x+" "+(y+yMove));
 //            System.out.println();
@@ -236,13 +204,14 @@ public class Hero extends Character
             if(foundBattery)
             {
                 System.out.println("merge bine");
-                speed+=0.2f;
+                speed+=0.5f;
             }
 
             if(foundChest)
             {
                 System.out.println("gasit cufar");
                 keys++;
+        //        InfoBox.ShowInfo("Ai gasit o cheie","Chei");
             }
         }
         else if(refLink.GetKeyManager().left)
@@ -250,10 +219,12 @@ public class Hero extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().collisionBattery(getBounds());
+            foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
             System.out.println("left"+canMove);
             System.out.println((x+xMove)+" "+y);
             System.out.println();
+
 
             if(canMove==false) //nu e coliziune
             {
@@ -269,13 +240,14 @@ public class Hero extends Character
             if(foundBattery)
             {
                 System.out.println("merge bine");
-                speed+=0.2f;
+                speed+=0.5f;
             }
 
             if(foundChest)
             {
                 System.out.println("gasit cufar");
                 keys++;
+          //      InfoBox.ShowInfo("Ai gasit o cheie","Chei");
             }
 
         }
@@ -284,11 +256,12 @@ public class Hero extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
-            foundChest=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().collisionBattery(getBounds());
+            foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
             System.out.println("right"+canMove);
             System.out.println((x+xMove)+" "+y);
             System.out.println();
+
 
             if(canMove==false) //nu e coliziune
             {
@@ -303,25 +276,20 @@ public class Hero extends Character
             if(foundBattery)
             {
                 System.out.println("merge bine");
-                speed+=0.1f;
+                speed+=0.5f;
             }
 
             if(foundChest)
             {
                 System.out.println("gasit cufar");
                 keys++;
+            //    InfoBox.ShowInfo("Ai gasit o cheie","Chei");
             }
         }
         else if(refLink.GetKeyManager().c)
         {
-            Rectangle rchero2= getBounds();
-            if(getBounds().intersects(hero2.getBounds()))
-            {
-                System.out.println("ATAC");
-                hero2.life-=10;
-            }
+            System.out.println("atac");
         }
-
 
 
         // Actualizare pozitie erou in cazul in care variabila canMove este false aka fara coliziune
@@ -366,26 +334,5 @@ public class Hero extends Character
         return new Rectangle((int)x,(int)y,width,height);
     }
 
-//    public void intersectareSpike()
-//    {
-//        Rectangle rp=getBounds();
-//        if(rp.intersects(obstacol.getBounds()))
-//        {
-//            System.out.println("intra in fct");
-//            life=life-5;
-//        }
-//
-//        if(life<0)
-//        {
-//            System.out.println("Personaj mort");
-//        }
-
-   //  }
-
-
-
-
-
-    //de cautat poza originala cu tot cu heal, vad cum utilizez aia
 
 }

@@ -31,6 +31,7 @@ public class Hero2 extends Character
     private boolean canMove=true;
     private boolean foundBattery= true;
     private boolean foundChest=true;
+    private boolean mapanoua=true;
 
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
@@ -139,8 +140,9 @@ public class Hero2 extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
-            foundChest=refLink.GetMap().checkCollisionWithChest(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().collisionBattery(getBounds());
+            foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
+            mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
             System.out.println("up"+canMove);
 //            System.out.println(x+""+(y+yMove);
 //
@@ -158,7 +160,7 @@ public class Hero2 extends Character
             if(foundBattery)
             {
                 System.out.println("merge bine 2");
-                speed+=0.2f;
+                speed+=0.5f;
             }
 
             if(foundChest)
@@ -172,8 +174,9 @@ public class Hero2 extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x,y+yMove,DEFAULT_CREATURE_WIDTH);
-
+            foundBattery=refLink.GetMap().collisionBattery(getBounds());
+            foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
+            mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
             System.out.println("down"+canMove);
 
             if(canMove==false) //nu e coliziune
@@ -190,15 +193,19 @@ public class Hero2 extends Character
             {
                 System.out.println("gasit cufar");
             }
+
+            if(foundBattery)
+            {
+                speed+=0.5f;
+            }
         }
         else if(refLink.GetKeyManager2().left)
         {
 
-
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
-            foundChest=refLink.GetMap().checkCollisionWithChest(x,x+xMove,DEFAULT_CREATURE_HEIGHT);
+            foundBattery=refLink.GetMap().collisionBattery(getBounds());
+            foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
             System.out.println("left"+canMove);
 
             if(canMove==false) //nu e coliziune
@@ -208,13 +215,13 @@ public class Hero2 extends Character
             else
             {
                 xMove=40;
-                SetY(y);
+                SetY(y+50);
             }
 
             if(foundBattery)
             {
                 System.out.println("merge bine");
-                speed+=0.2f;
+                speed+=0.5f;
             }
 
             if(foundChest)
@@ -229,8 +236,8 @@ public class Hero2 extends Character
 
             // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
-            foundBattery=refLink.GetMap().checkCollisionWithBattery(x+xMove,y,DEFAULT_CREATURE_WIDTH);
-            foundChest=refLink.GetMap().checkCollisionWithChest(x+xMove,y,DEFAULT_CREATURE_WIDTH);
+            foundBattery=refLink.GetMap().collisionBattery(getBounds());
+            foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
             System.out.println("right"+canMove);
 
             if(canMove==false) //nu e coliziune
@@ -246,7 +253,7 @@ public class Hero2 extends Character
             if(foundBattery)
             {
                 System.out.println("merge bine");
-                speed+=0.1f;
+                speed+=0.5f;
             }
 
             if(foundChest)

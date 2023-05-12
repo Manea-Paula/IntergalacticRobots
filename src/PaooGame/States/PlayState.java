@@ -35,8 +35,8 @@ public class PlayState extends State
 
             ///Construieste eroul + camera
         camera=new Camera(0,0);
-        hero = new Hero(refLink,300, 500);
-        hero2= new Hero2(refLink,220,350);
+        hero = new Hero(refLink,200, 500);
+        hero2= new Hero2(refLink,120,350);
 
         //chest= new Chest(refLink,415,265,50,50);
       //  camera=new Camera(0,0,960,680,hero,hero2);

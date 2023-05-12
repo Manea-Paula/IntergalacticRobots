@@ -31,6 +31,7 @@ public class Map {
     public static int width = 50;          /*!< Latimea hartii in numar de dale.*/
     public static int height = 31;         /*!< Inaltimea hartii in numar de dale.*/
     private int[][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
+    private int ID;
 
     /*! \fn public Map(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -44,6 +45,7 @@ public class Map {
 
         ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
         LoadWorld(1);
+        ID=1;
     }
 
     /*! \fn public  void Update()
@@ -94,6 +96,8 @@ public class Map {
 
          //   g.drawString("Speed"+(Hero2.speed),10,19);
         }
+        else
+            g.drawString("Key Players "+(Character.score+1),810,19);
 
         if(hasBattery)
         {
@@ -133,6 +137,7 @@ public class Map {
         return t;
     }
 
+
     /*! \fn private void LoadWorld()
         \brief Functie de incarcare a hartii jocului.
         Aici se poate genera sau incarca din fisier harta
@@ -171,8 +176,10 @@ public class Map {
                     width = 50;
                     height = 31;
                     tiles = new int[width][height];
-                    for (int y = 0; y < height; y++) {
-                        for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++)
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
                             tiles[x][y] = Level1(y, x);
                         }
                     }
@@ -184,6 +191,40 @@ public class Map {
                 try
                 {
                     Scanner sc = new Scanner(new File("src/res/maps/hartaNivel2.txt"));
+                    int rows = 31;
+                    int columns = 50;
+                    int [][] harta = new int[rows][columns];
+                    while(sc.hasNextLine()) {
+                        for (int i=0; i<harta.length; i++) {
+                            String[] line = sc.nextLine().trim().split(" ");
+                            for (int j=0; j<line.length; j++) {
+                                harta[i][j] = Integer.parseInt(line[j]);
+                            }
+                        }
+                    }
+                    tiles = harta;
+//                  System.out.println(Arrays.deepToString(harta));
+
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                    // daca incarc prost harta din fisier, fct o restaurez pe harta statica
+                    width = 50;
+                    height = 31;
+                    tiles = new int[width][height];
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width; x++) {
+                            tiles[x][y] = Level2(y, x);
+                        }
+                    }
+
+                }
+                break;
+            case 3:
+                try
+                {
+                    Scanner sc = new Scanner(new File("src/res/maps/hartaNivel3.txt"));
                     int rows = 31;
                     int columns = 50;
                     int [][] harta = new int[rows][columns];
@@ -298,16 +339,23 @@ public class Map {
 //        if(topTile < 0) return true;
 //        if(bottomTile > 30) return true;
 
-        // Verificăm dacă există vreo cifră 1 în zona de coliziune
         for (int row = topTile; row <= bottomTile; row++)
         {
             for (int col = leftTile; col <= rightTile; col++)
             {
-                if (tiles[row][col] == 7)
+                if (tiles[row][col] == 7 && ID==1 )
                 {
                     LoadWorld(2);
+                    ID=2;
                     return true;
                 }
+                else
+                    if(tiles[row][col]==7 && ID==2)
+                    {
+                        LoadWorld(3);
+                        ID=3;
+                        return true;
+                    }
             }
         }
 
@@ -343,12 +391,12 @@ public class Map {
 
     }
 
-    public boolean checkCollisionWithChest(float x,float y,int playerSize)
+    public boolean checkCollisionWithChest(Rectangle bounds)
     {
-        int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
-        int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
-        int topTile = (int) (y - playerSize / 2) / Tile.TILE_WIDTH;
-        int bottomTile = (int) (y + playerSize / 2) / Tile.TILE_WIDTH;
+//        int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
+//        int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
+//        int topTile = (int) (y - playerSize / 2) / Tile.TILE_WIDTH;
+//        int bottomTile = (int) (y + playerSize / 2) / Tile.TILE_WIDTH;
 
         Random random = new Random();
         int randomNumber = random.nextInt(2);
@@ -362,32 +410,32 @@ public class Map {
         }
 
 
-        for (int row = topTile; row < bottomTile; row++)
+        for (int i = 0; i < height; i++)
         {
-            for (int col = leftTile; col < rightTile; col++)
+            for (int j = 0; j < width; j++)
             {
-                if (tiles[row][col] == 5)
+                if (tiles[i][j] == 5)
                 {
-
-//                        int ceva= Key.found.getInfo();
-//                        int ceva2= Key.notFound.getInfo();
-//                        System.out.println(ceva+" "+ceva2);
-
+                    Rectangle obstacleBounds = new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+                    if(obstacleBounds.intersects(bounds))
+                    {
                         switch (key)
                         {
                             case found:
-                                System.out.println("intra in fct");
+                                //InfoBox.ShowInfo("Cheie gasita!","Chei");
+                                // g.drawString("Cheie gasita",50,50);
                                 hasChest=true;
-                                tiles[row][col]=0;
+                                tiles[i][j]=0;
                                 break;
                             case notFound:
                                 System.out.println("No key found with info: " + PaooGame.Items.Key.notFound.getInfo());
                                 //  hero.score=0;
                                 hasChest=false;
-                                tiles[row][col]=3;                                                      ;
+                                tiles[i][j]=0;                                                      ;
                                 break;
                         }
-                    return true;
+                        return true;
+                    }
 
                 }
             }
@@ -396,33 +444,56 @@ public class Map {
         return false;
     }
 
-    public boolean checkCollisionWithBattery(float x, float y, int playerSize) {
+//    public boolean checkCollisionWithBattery(float x, float y, int playerSize)
+//    {
+//       // System.out.println("baterii");
+//        int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
+//        System.out.println("left tile "+leftTile);
+//        int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
+//        int topTile = (int) (y - playerSize / 2) / Tile.TILE_WIDTH;
+//        int bottomTile = (int) (y + playerSize / 2) / Tile.TILE_WIDTH;
+//
+//        for (int row = topTile; row < bottomTile; row++)
+//        {
+//            for (int col = leftTile; col < rightTile; col++)
+//            {
+//                if(tiles[row][col]==6)
+//                {
+//                    System.out.println("baterie");
+//                    tiles[row][col]=0;
+//
+//                    return true;
+//                }
+//
+//            }
+//        }
+//
+//        return false;
+//    }
 
-       // System.out.println("baterii");
-        int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
-        int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
-        int topTile = (int) (y - playerSize / 2) / Tile.TILE_WIDTH;
-        int bottomTile = (int) (y + playerSize / 2) / Tile.TILE_WIDTH;
-
-        for (int row = topTile; row < bottomTile; row++)
-        {
-            for (int col = leftTile; col < rightTile; col++)
-            {
-                if(tiles[row][col]==6)
+    public boolean collisionBattery(Rectangle bounds) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (tiles[i][j] == 6)
                 {
-
-                    System.out.println("baterie");
-                    tiles[row][col]=0;
-
-                    return true;
+                    Rectangle obstacleBounds = new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+                    if (obstacleBounds.intersects(bounds))
+                    {
+                        tiles[i][j]=0;
+                        return true;
+                    }
                 }
-
-
-
             }
         }
-
         return false;
+    }
+
+
+    public void checkCollisionWithButton()
+    {
+
+
+
     }
 
 

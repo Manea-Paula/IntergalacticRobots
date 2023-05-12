@@ -146,7 +146,7 @@ public class Game implements Runnable
         aboutState      = new AboutState(refLink);
         //currentState=menuState;
             ///Seteaza starea implicita cu care va fi lansat programul in executie
-        State.SetState(menuState);
+        State.SetState(playState);
     }
 
     /*! \fn public void run()
@@ -182,8 +182,6 @@ public class Game implements Runnable
                 oldTime = curentTime;
             }
 
-//            JLabel timeLabel= new JLabel("Time: 0");
-//            timeLabel.setText("Time"+ (curentTime-oldTime));
         }
 
     }
@@ -286,7 +284,6 @@ public class Game implements Runnable
             State.GetState().Update();
         }
 
-
     }
 
     /*! \fn private void Draw()
@@ -294,7 +291,7 @@ public class Game implements Runnable
 
         Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
      */
-    private void Draw()
+    public void Draw()
     {
             /// Returnez bufferStrategy pentru canvasul existent
         bs = wnd.GetCanvas().getBufferStrategy();
