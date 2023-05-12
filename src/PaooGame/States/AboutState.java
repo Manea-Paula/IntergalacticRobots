@@ -3,16 +3,19 @@ package PaooGame.States;
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.RefLinks;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 /*! \class public class AboutState extends State
     \brief Implementeaza notiunea de credentiale (about)
  */
 public class AboutState extends State
 {
-    private GameWindow wnd;
-    private BufferStrategy bs;
+    private Color backColor;
+    private JTextArea textArea;
+    private JScrollPane scrollPane;
 
     /*! \fn public AboutState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -23,8 +26,15 @@ public class AboutState extends State
     {
             ///Apel al constructorului clasei de baza.
         super(refLink);
-       // wnd= new GameWindow("About",960,680);
-     //   wnd.BuildGameWindow();
+        backColor= Color.gray;
+        textArea=new JTextArea();
+        textArea.setEditable(false); // Set to true if you want the text to be editable
+        textArea.setLineWrap(true); // Enable line wrapping
+        textArea.setWrapStyleWord(true); // Wrap lines at word boundaries
+        scrollPane = new JScrollPane(textArea);
+        scrollPane.setBounds(0, 0, 960, 680); // Set the size of the scroll pane
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Always show the vertical scrollbar
+
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniu about.
@@ -32,8 +42,7 @@ public class AboutState extends State
     @Override
     public void Update()
     {
-      //  System.out.println();
-
+        textArea.setText("by moving doors.");
     }
 
     /*! \fn public void Draw(Graphics g)
@@ -44,38 +53,9 @@ public class AboutState extends State
     @Override
     public void Draw(Graphics g)
     {
-//        g.drawRect(12,12,100,13);
-//        g.setColor(Color.BLACK);
-
-        bs= wnd.GetCanvas().getBufferStrategy();
-        if(bs == null)
-        {
-            /// Se executa doar la primul apel al metodei Draw()
-            try
-            {
-                /// Se construieste tripul buffer
-                wnd.GetCanvas().createBufferStrategy(3);
-                return;
-            }
-            catch (Exception e)
-            {
-                /// Afisez informatii despre problema aparuta pentru depanare.
-                e.printStackTrace();
-            }
-        }
-
-        g = bs.getDrawGraphics();
-        Font fnt1 = new Font("arial",Font.BOLD,30);
-        g.setFont(fnt1);
-        g.setColor(Color.black);
-        g.drawString("proba 1 2",200,30);
-
-        /// Se sterge ce era
-        g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
-
-        bs.show();
-        g.dispose();
-
+        g.setColor(backColor);
+        g.fillRect(0,0,960,680);
+        scrollPane.paintComponents(g);
 
     }
 }

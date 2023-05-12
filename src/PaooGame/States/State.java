@@ -39,6 +39,7 @@ public abstract class State
 
         ///Metoda abstracta destinata actualizarii starii curente
     public abstract void Update();
+
         ///Metoda abstracta destinata desenarii starii curente
     public abstract void Draw(Graphics g);
 }

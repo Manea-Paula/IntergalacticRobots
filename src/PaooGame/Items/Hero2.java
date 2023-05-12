@@ -215,7 +215,7 @@ public class Hero2 extends Character
             else
             {
                 xMove=40;
-                SetY(y+50);
+                SetY(y);
             }
 
             if(foundBattery)

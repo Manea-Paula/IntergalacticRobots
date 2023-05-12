@@ -56,6 +56,7 @@ public class PlayState extends State
     @Override
     public void Update()
     {
+
         map.Update();
         hero.Update();
 
@@ -89,5 +90,16 @@ public class PlayState extends State
        // obstacol.Draw(g);
    //     camera.draw(g);
       //  g.translate((int) camera.getxOffset(), (int) camera.getyOffset());
+
+        HandleInput();
+
+    }
+
+    public void HandleInput()
+    {
+        if(refLink.GetKeyManagerState().escape)
+        {
+            refLink.GetGame().SetState(new MenuState(refLink));
+        }
     }
 }

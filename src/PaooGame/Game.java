@@ -146,7 +146,7 @@ public class Game implements Runnable
         aboutState      = new AboutState(refLink);
         //currentState=menuState;
             ///Seteaza starea implicita cu care va fi lansat programul in executie
-        State.SetState(playState);
+        State.SetState(menuState);
     }
 
     /*! \fn public void run()
@@ -251,7 +251,6 @@ public class Game implements Runnable
                     /// Metoda join() pune un thread in asteptare panca cand un altul isi termina executie.
                     /// Totusi, in situatia de fata efectul apelului este de oprire a threadului.
                 gameThread.join();
-                //threadKevin.join();
             }
             catch(InterruptedException ex)
             {

@@ -147,15 +147,15 @@ public class MenuState extends State
             {
                 case 0: //start game
                     //change the game state to the play state
-                    refLink.GetGame().SetState(new PlayState(refLink));
+                    State.SetState(new PlayState(refLink));
 
                     break;
                 case 1: //settings
                     //change the game state to the settings state
-                    refLink.GetGame().SetState(new SettingsState(refLink));
+                    State.SetState(new SettingsState(refLink));
                     break;
                 case 2: //about
-                    refLink.GetGame().SetState(new AboutState(refLink));
+                    State.SetState(new AboutState(refLink));
                     break;
                 case 3:
                     //exit the game
@@ -164,11 +164,11 @@ public class MenuState extends State
                     break;
             }
         }
-
-        if(refLink.GetKeyManagerState().escape)
-        {
-            refLink.GetGame().SetState(new MenuState(refLink));
-        }
+//
+//        if(refLink.GetKeyManagerState().escape)
+//        {
+//            refLink.GetGame().SetState(new MenuState(refLink));
+//        }
 
     }
 
