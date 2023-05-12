@@ -44,8 +44,7 @@ public class Assets
         Aceasta functie poate fi rescrisa astfel incat elementele grafice incarcate/utilizate
         sa fie parametrizate. Din acest motiv referintele nu sunt finale.
      */
-    public static void Init()
-    {
+    public static void Init()  {
             /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
         SpriteSheet sheet = new SpriteSheet(ImageLoader.LoadImage("src/res/textures/SpriteSheet.png"));
         SpriteSheet sheetPlayer1= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/player.png"));

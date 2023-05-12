@@ -12,6 +12,7 @@ import java.sql.*;
  */
 public class SettingsState extends State
 {
+    private Color color;
 
     Connection c= null;
     Statement stmt= null;
@@ -25,29 +26,32 @@ public class SettingsState extends State
             ///Apel al construcotrului clasei de baza.
         super(refLink);
 
+        color=Color.black;
 
-//        try {
-//            Class.forName("org.sqlite.JDBC");
-//            c = DriverManager.getConnection("jdbc:sqlite:bazaSettings.db");
-//            c.setAutoCommit(false);
-//            stmt = c.createStatement();
-//            ResultSet rs = stmt.executeQuery( "SELECT * FROM setari;" );
-//            while ( rs.next() ) {
-//                String name = rs.getString("Personaj1");
-//                String name2= rs.getString("Personaj2");
-//                int night = rs.getInt("NightMode");
-//                int difficulty= rs.getInt("DifficultyLevel");
-//
-//                System.out.println("nume: "+name+" mod: "+night);
-//            }
-//            rs.close();
-//            stmt.close();
-//            c.close();
-//        } catch ( Exception e ) {
-//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-//            System.exit(0);
-//        }
-//        System.out.println("Opened database successfully");
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:bazaSettings.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM setari;" );
+            while ( rs.next() ) {
+                String name = rs.getString("Personaj1");
+                String name2= rs.getString("Personaj2");
+                int night = rs.getInt("NightMode");
+            //    int difficulty= rs.getInt("DifficultyLevel");
+
+                System.out.println("nume pers 1: "+name+" \n nume pers 2"+name2+"\n mod joc: "+night);
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch ( Exception e )
+        {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+        System.out.println("Opened database successfully");
     }
 
 
@@ -68,10 +72,10 @@ public class SettingsState extends State
     @Override
     public void Draw(Graphics g)
     {
+        g.setColor(color);
 
         if(refLink.GetKeyManagerState().escape)
         {
-            //refLink.GetGame().SetState(new MenuState(refLink));
             State.SetState(new MenuState(refLink));
         }
 
