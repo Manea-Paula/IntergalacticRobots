@@ -315,7 +315,7 @@ public class Map {
                 if (tiles[row][col] == 7 && ID==1 )
                 {
                     LoadWorld(2);
-                    System.out.println("aici e problema");
+                   // System.out.println("aici e problema");
                     ID=2;
                     return true;
                 }
@@ -364,11 +364,6 @@ public class Map {
 
     public boolean checkCollisionWithChest(Rectangle bounds)
     {
-//        int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
-//        int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
-//        int topTile = (int) (y - playerSize / 2) / Tile.TILE_WIDTH;
-//        int bottomTile = (int) (y + playerSize / 2) / Tile.TILE_WIDTH;
-
         Random random = new Random();
         int randomNumber = random.nextInt(2);
         if (randomNumber == 0)
@@ -393,8 +388,6 @@ public class Map {
                         switch (key)
                         {
                             case found:
-                                //InfoBox.ShowInfo("Cheie gasita!","Chei");
-                                // g.drawString("Cheie gasita",50,50);
                                 hasChest=true;
                                 if(ID==1)
                                     tiles[i][j]=0;
@@ -404,15 +397,13 @@ public class Map {
                                             tiles[i][j]=21;
                                 break;
                             case notFound:
-                                System.out.println("No key found with info: " + PaooGame.Items.Key.notFound.getInfo());
-                                //  hero.score=0;
                                 hasChest=false;
                                 if(ID==1)
                                     tiles[i][j]=0;
                                 else if(ID==2)
                                     tiles[i][j]=10;
-                                else if(ID==3)
-                                    tiles[i][j]=21;                                                     ;
+                                    else if(ID==3)
+                                        tiles[i][j]=21;                                                     ;
                                 break;
                         }
                         return true;
@@ -422,6 +413,28 @@ public class Map {
             }
         }
 
+        return false;
+    }
+    public boolean collisionElements(Rectangle bounds)
+    {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (tiles[i][j] == 3 || tiles[i][j]==11 || tiles[i][j]==22 || tiles[i][j]==23)
+                {
+                    Rectangle obstacleBounds = new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+                    if (obstacleBounds.intersects(bounds))
+                    {
+                        if(ID==1)
+                            tiles[i][j]=0;
+                        else if(ID==2)
+                            tiles[i][j]=10;
+                            else if(ID==3)
+                                tiles[i][j]=21;
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 

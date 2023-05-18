@@ -4,6 +4,8 @@ import PaooGame.Graphics.Assets;
 import PaooGame.InfoBox;
 import PaooGame.RefLinks;
 import PaooGame.Sound.SoundManager;
+import PaooGame.States.MenuState;
+import PaooGame.States.State;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -36,6 +38,7 @@ public class Hero2 extends Character
     private boolean foundBattery= true;
     private boolean foundChest=true;
     private boolean mapanoua=true;
+    private boolean elements=true;
 
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
@@ -71,7 +74,7 @@ public class Hero2 extends Character
 
 
         currentFrame = 0;
-        animationSpeed = 14;
+        animationSpeed = 12;
     }
 
 
@@ -140,8 +143,6 @@ public class Hero2 extends Character
 
         if(refLink.GetKeyManager2().up)
         {
-
-            // Apel functie checkCollisionWithObstacles pentru directia in care merge eroul
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().collisionBattery(getBounds());
             foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
@@ -151,9 +152,7 @@ public class Hero2 extends Character
             refLink.GetMap().checkCollisionWithButtonRosu2(getBounds());
             refLink.GetMap().checkCollisionWithButtonRosu3(getBounds());
             refLink.GetMap().checkCollisionWithButtonAlb3(getBounds());
-            System.out.println("up"+canMove);
-//            System.out.println(x+""+(y+yMove);
-//
+
             if(canMove==false) //nu e coliziune
             {
                 yMove = -speed;
@@ -168,19 +167,17 @@ public class Hero2 extends Character
 
             if(foundBattery)
             {
-           //     System.out.println("merge bine 2");
                 speed+=0.5f;
             }
 
             if(foundChest)
             {
-             //   System.out.println("gasit cufar");
                 keys++;
-                if(keys>=2)
-                {
-                    System.out.println("intra pe aici");
-//                    mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
-                }
+//                if(keys>=2)
+//                {
+//                    System.out.println("intra pe aici");
+////                    mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+//                }
             }
 
         }
@@ -317,6 +314,12 @@ public class Hero2 extends Character
             if(refLink.GetKeyManager2().p)
             {
                 System.out.println("atac");
+                elements=refLink.GetMap().collisionElements(getBounds());
+                if(elements)
+                {
+                    keys++;
+                    life-=5;
+                }
             }
 
         // Actualizare pozitie erou in cazul in care variabila canMove este false aka fara coliziune
@@ -339,29 +342,25 @@ public class Hero2 extends Character
     {
         g.drawImage(image, (int)x, (int)y, width, height, null);
 
-        BufferedImage img;
-
-//        try {
-//            img = ImageIO.read(new File("src/res/textures/rsz_secret_key.png"));
-//            g.drawImage(img,10,10,null);
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        Font font = new Font("Arial", Font.BOLD, 20);
+        g.setFont(font);
 
         if(keys!=0)
         {
             g.setColor(Color.red);
-            g.drawString("Key Player 2:"+(keys),10,10);
-
+            g.drawString("Key Player2: "+(keys),10,15);
         }
 
-        g.drawString("Life player 2:"+(life),10,15);
+        if(life>0)
+        {
+            g.setColor(Color.red);
+            g.drawString("Life Player2: "+(life),10,30);
+        }
 
         if(life==0)
         {
-            InfoBox.ShowInfo("Ai murit!","Viata personaj 2");
-            refLink.GetGame().StopGame();
+            InfoBox.ShowInfo("Ai murit! Ai pierdut jocul","Final joc");
+           // State.SetState(new MenuState(refLink));
         }
 
         ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii

@@ -37,7 +37,7 @@ public class Hero extends Character
     private boolean foundChest=true; //pt chei
     private boolean mapanoua=true;
     private boolean foundBattery=true;
-    Hero hero2;
+    private boolean elements=true;
 
 
     /*! \fn public Hero(RefLinks refLink, float x, float y)
@@ -66,7 +66,7 @@ public class Hero extends Character
         attackFrames= new BufferedImage[] {Assets.KevinAttack2,Assets.KevinAttack3,Assets.KevinAttack4,Assets.KevinAttack5,Assets.KevinAttack6};
 
         currentFrame = 0;
-        animationSpeed = 14;
+        animationSpeed = 12;
 
         //      this.obstacol=new Obstacol(refLink,150,150,48,48,80,600);
         ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
@@ -324,10 +324,17 @@ public class Hero extends Character
                 //    InfoBox.ShowInfo("Ai gasit o cheie","Chei");
             }
         }
-        else if(refLink.GetKeyManager().c)
-        {
-            System.out.println("atac");
-        }
+        else
+            if(refLink.GetKeyManager().c)
+            {
+                System.out.println("atac");
+                elements=refLink.GetMap().collisionElements(getBounds());
+                if(elements)
+                {
+                    keys++;
+                    life-=5;
+                }
+            }
 
 
         // Actualizare pozitie erou in cazul in care variabila canMove este false aka fara coliziune
@@ -362,24 +369,20 @@ public class Hero extends Character
 
         g.drawImage(image, (int)x, (int)y, width, height, null);
 
-        Image img;
-
-//        try {
-//            img = ImageIO.read(new File("src/res/textures/rsz_secret_key.png"));
-//            img.getScaledInstance(8,8,img.SCALE_DEFAULT);
-//            g.drawImage(img,800,10,null);
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        Font font = new Font("Arial", Font.BOLD, 20);
+        g.setFont(font);
 
         if(keys!=0)
         {
             g.setColor(Color.red);
-            g.drawString("Key Player 1:"+(keys),800,10);
+            g.drawString("Key Player1: "+(keys),800,15);
         }
 
-        g.drawString("Life Player 1:"+(life),800,15);
+        if(life>0)
+        {
+            g.setColor(Color.red);
+            g.drawString("Life Player1: "+(life),800,30);
+        }
 
         if(life==0)
         {
