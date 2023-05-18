@@ -1,11 +1,15 @@
 package PaooGame.Items;
 
 import PaooGame.Graphics.Assets;
+import PaooGame.InfoBox;
 import PaooGame.RefLinks;
 import PaooGame.Sound.SoundManager;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -113,17 +117,16 @@ public class Hero2 extends Character
             }
             image = attackFrames[currentFrame / animationSpeed];
 
-        //    String soundUrl= this.getClass().getResource("/res/textures/AngryRobotBird.wav").getPath();
-           // SoundManager.playSound("/home/paula/Documents/PaooGameEtapa2/res/textures/Angry Robot Bird.wav");
-          //  SoundManager.playSound(soundUrl);
+            //    String soundUrl= this.getClass().getResource("/res/textures/AngryRobotBird.wav").getPath();
+            // SoundManager.playSound("/home/paula/Documents/PaooGameEtapa2/res/textures/Angry Robot Bird.wav");
+            //  SoundManager.playSound(soundUrl);
         }
 
         else
-
-            {
-                // If no direction is pressed, show idle image
-                image = Assets.ErikaIdle;
-            }
+        {
+            // If no direction is pressed, show idle image
+            image = Assets.ErikaIdle;
+        }
     }
 
     /*! \fn private void GetInput()
@@ -143,6 +146,11 @@ public class Hero2 extends Character
             foundBattery=refLink.GetMap().collisionBattery(getBounds());
             foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
             mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            refLink.GetMap().checkCollisionWithButtonAlb1(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu3(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb3(getBounds());
             System.out.println("up"+canMove);
 //            System.out.println(x+""+(y+yMove);
 //
@@ -152,6 +160,7 @@ public class Hero2 extends Character
             }
             else
             {
+                life-=10;
                 yMove=40;
                 SetX(x);
 
@@ -159,13 +168,19 @@ public class Hero2 extends Character
 
             if(foundBattery)
             {
-                System.out.println("merge bine 2");
+           //     System.out.println("merge bine 2");
                 speed+=0.5f;
             }
 
             if(foundChest)
             {
-                System.out.println("gasit cufar");
+             //   System.out.println("gasit cufar");
+                keys++;
+                if(keys>=2)
+                {
+                    System.out.println("intra pe aici");
+//                    mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+                }
             }
 
         }
@@ -177,6 +192,11 @@ public class Hero2 extends Character
             foundBattery=refLink.GetMap().collisionBattery(getBounds());
             foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
             mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            refLink.GetMap().checkCollisionWithButtonAlb1(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu3(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb3(getBounds());
             System.out.println("down"+canMove);
 
             if(canMove==false) //nu e coliziune
@@ -185,6 +205,7 @@ public class Hero2 extends Character
             }
             else
             {
+                life-=10;
                 yMove=-40;
                 SetX(x);
             }
@@ -192,6 +213,12 @@ public class Hero2 extends Character
             if(foundChest)
             {
                 System.out.println("gasit cufar");
+                keys++;
+                if(keys>=2)
+                {
+                    System.out.println("intra pe aici");
+//                    mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+                }
             }
 
             if(foundBattery)
@@ -206,6 +233,12 @@ public class Hero2 extends Character
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().collisionBattery(getBounds());
             foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
+            mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            refLink.GetMap().checkCollisionWithButtonAlb1(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu3(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb3(getBounds());
             System.out.println("left"+canMove);
 
             if(canMove==false) //nu e coliziune
@@ -214,6 +247,7 @@ public class Hero2 extends Character
             }
             else
             {
+                life-=10;
                 xMove=40;
                 SetY(y);
             }
@@ -228,6 +262,11 @@ public class Hero2 extends Character
             {
                 System.out.println("gasit cufar");
                 keys++;
+                if(keys>=2)
+                {
+                    System.out.println("intra pe aici");
+//                    mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+                }
             }
 
         }
@@ -238,6 +277,12 @@ public class Hero2 extends Character
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().collisionBattery(getBounds());
             foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
+            mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            refLink.GetMap().checkCollisionWithButtonAlb1(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu3(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb3(getBounds());
             System.out.println("right"+canMove);
 
             if(canMove==false) //nu e coliziune
@@ -246,6 +291,7 @@ public class Hero2 extends Character
             }
             else
             {
+                life-=10;
                 xMove=-40;
                 SetY(y);
             }
@@ -260,6 +306,11 @@ public class Hero2 extends Character
             {
                 System.out.println("gasit cufar");
                 keys++;
+                if(keys>=2)
+                {
+                    System.out.println("intra pe aici");
+                   // mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+                }
             }
         }
         else
@@ -287,6 +338,31 @@ public class Hero2 extends Character
     public void Draw(Graphics g)
     {
         g.drawImage(image, (int)x, (int)y, width, height, null);
+
+        BufferedImage img;
+
+//        try {
+//            img = ImageIO.read(new File("src/res/textures/rsz_secret_key.png"));
+//            g.drawImage(img,10,10,null);
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
+        if(keys!=0)
+        {
+            g.setColor(Color.red);
+            g.drawString("Key Player 2:"+(keys),10,10);
+
+        }
+
+        g.drawString("Life player 2:"+(life),10,15);
+
+        if(life==0)
+        {
+            InfoBox.ShowInfo("Ai murit!","Viata personaj 2");
+            refLink.GetGame().StopGame();
+        }
 
         ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
 //        g.setColor(Color.red);

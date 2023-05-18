@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class Tile
 {
-    private static final int NO_TILES   = 32;
+    private static final int NO_TILES   = 40;
     public static Tile[] tiles          = new Tile[NO_TILES];       /*!< Vector de referinte de tipuri de dale.*/
 
         /// De remarcat ca urmatoarele dale sunt statice si publice. Acest lucru imi permite sa le am incarcate
@@ -20,20 +20,42 @@ public class Tile
 //    public static Tile treeTile         = new TreeTile(3);      /*!< Dala de tip copac*/
 //    public static Tile soilTile         = new SoilTile(4);      /*!< Dala de tip sol/pamant*/
 
-
     public static Tile sandTile= new SandTile(0);
     public static Tile wallTile= new WallTile(1);
-    public static Tile waterTile=new WaterTile(2);
-    public static Tile grassTile= new GrassTile(3);
-    public static Tile flowerTile= new FlowerTile(4);
-    public static Tile chestTile=new ChestTile(5);
-    public static Tile batteryTile=new BatteryTile(6);
-    public static Tile portalTile=new PortalTile(7);
+    public static Tile duneTile= new DuneTile(2);
+    public static Tile coconutTile= new CoconutTile(3);
+    public static Tile light1TIle= new Light1(4);
+    public static Tile chest1Tile= new ChestLevel1Tile(5);
+    public static Tile battery1Tile= new Battery1Tile(6);
+    public static Tile portal1Tile= new PortalLevel1Tile(7);
+    public static Tile activA1Tile= new ButtonActivAlb1Tile(8);
+    public static Tile neactivA1Tile= new ButtonNeactivAlb1Tile(9);
 
-  //  public static  Tile bladeTile=new BladeTile(8);
-    public static Tile buttonTile= new ButtonTile(8);
-    public static Tile lightTile= new LightTile(9);
-    public static Tile fireTile=new FireballTile(10);
+    public static Tile grassTile = new GrassTile(10);
+    public static Tile treeTrunkTile= new TreeTrunkTile(11);
+    public static Tile battery2Tile= new Battery2Tile(12);
+    public static Tile chest2Tile= new ChestLevel2Tile(13);
+    public static Tile light2Tile= new Light2(14);
+    public static Tile  fireDown2Tile= new FireDown2Tile(15);
+    public static Tile fireRight2Tile= new FireRight2Tile(16);
+    public static Tile activA2Tile= new ButtonActivAlb2Tile(17);
+    public static Tile neactivA2Tile= new ButtonNeactivAlb2Tile(18);
+    public static Tile activR2Tile= new ButtonActivRosu2Tile(19);
+    public static Tile neactivR2Tile= new ButtonNeactivRosu2Tile(20);
+    public static Tile portal2Tile= new PortalLevel2Tile(30);
+    public static Tile purpleSoilTile = new PurpleSoilTile(21);
+    public static Tile gemTile= new GemTile(22);
+    public static Tile diamondTile= new DiamondTile(23);
+    public static Tile light3Tile= new Light3(24);
+    public static Tile fireRight3Tile= new FireRight3Tile(25);
+    public static Tile activA3Tile= new ButtonActivAlb3Tile(26);
+    public static Tile neactivA3Tile= new ButtonNeactivAlb3Tile(27);
+    public static Tile activR3Tile= new ButtonActivRosu3Tile(28);
+    public static Tile neactivR3Tile= new ButtonNeactivRosu3Tile(29);
+    public static Tile chest3Tile= new ChestLevel3Tile(31);
+    public static Tile battery3Tile= new Battery3Tile(32);
+    public static Tile fireRight2= new FireRight2Tile(33);
+
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/

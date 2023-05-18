@@ -30,7 +30,7 @@ public class SettingsState extends State
 
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:bazaSettings.db");
+            c = DriverManager.getConnection("jdbc:sqlite:src/res/bazaSettings.db");
             c.setAutoCommit(false);
             stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery( "SELECT * FROM setari;" );

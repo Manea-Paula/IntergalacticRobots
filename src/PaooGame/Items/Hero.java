@@ -4,8 +4,11 @@ import PaooGame.Graphics.Assets;
 import PaooGame.InfoBox;
 import PaooGame.RefLinks;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -30,7 +33,7 @@ public class Hero extends Character
     private int currentFrame; // Current animation frame
     private int animationSpeed; // Speed of animation
     private boolean canMove = true; //  pt coliziune
- //   private boolean foundBattery = true; // pt baterii
+    //   private boolean foundBattery = true; // pt baterii
     private boolean foundChest=true; //pt chei
     private boolean mapanoua=true;
     private boolean foundBattery=true;
@@ -46,11 +49,11 @@ public class Hero extends Character
          */
     public Hero(RefLinks refLink, float x, float y)
     {
-            ///Apel al constructorului clasei de baza
+        ///Apel al constructorului clasei de baza
         super(refLink, x,y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
-            ///Seteaza imaginea de start a eroului
+        ///Seteaza imaginea de start a eroului
         image = Assets.KevinIdle;
-            ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita(normala)
+        ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita(normala)
         normalBounds.x = 16;
         normalBounds.y = 16;
         normalBounds.width = 16;
@@ -65,8 +68,8 @@ public class Hero extends Character
         currentFrame = 0;
         animationSpeed = 14;
 
-  //      this.obstacol=new Obstacol(refLink,150,150,48,48,80,600);
-            ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
+        //      this.obstacol=new Obstacol(refLink,150,150,48,48,80,600);
+        ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
 //        attackBounds.x = 10;
 //        attackBounds.y = 10;
 //        attackBounds.width = 38;
@@ -80,11 +83,11 @@ public class Hero extends Character
     @Override
     public void Update()
     {
-            ///Verifica daca a fost apasata o tasta
+        ///Verifica daca a fost apasata o tasta
         GetInput();
-            ///Actualizeaza pozitia
-       Move();
-            ///Actualizeaza imaginea
+        ///Actualizeaza pozitia
+        Move();
+        ///Actualizeaza imaginea
         if (refLink.GetKeyManager().up == true) {
             currentFrame++;
             if (currentFrame >= upFrames.length * animationSpeed) {
@@ -118,7 +121,7 @@ public class Hero extends Character
             image = attackFrames[currentFrame / animationSpeed];
 
 
-          //  String soundUrl= this.getClass().getResource("/res/textures/AngryRobotBird.wav").getPath();
+            //  String soundUrl= this.getClass().getResource("/res/textures/AngryRobotBird.wav").getPath();
             // SoundManager.playSound("/home/paula/Documents/PaooGameEtapa2/res/textures/Angry Robot Bird.wav");
             //SoundManager.playSound(soundUrl);
         }
@@ -138,7 +141,8 @@ public class Hero extends Character
     {
         xMove = 0;
         yMove = 0;
-
+        int nextX;
+        int nextY;
 
         if(refLink.GetKeyManager().up)
         {
@@ -156,29 +160,30 @@ public class Hero extends Character
             {
                 yMove = -speed;
             }
-           else
+            else
             {
                 yMove=40;
                 SetX(x);
             }
 
-           if(foundBattery)
-           {
-               System.out.println("merge bine");
-               speed+=0.5f;
-           }
+            if(foundBattery)
+            {
+                System.out.println("merge bine");
+                speed+=0.5f;
+            }
 
+            if(foundChest)
+            {
+             //   System.out.println("gasit cufar");
+                keys++;
 
-           if(foundChest)
-           {
-               System.out.println("gasit cufar");
-      //         InfoBox.ShowInfo("Ai gasit o cheie","Chei");
-           }
+                if(keys>=2)
+                {
+                    System.out.println("intra pe aici");
 
-           if(mapanoua)
-           {
-               System.out.println("MAPA NOUA");
-           }
+                }
+                //         InfoBox.ShowInfo("Ai gasit o cheie","Chei");
+            }
 
         }
         else if(refLink.GetKeyManager().down)
@@ -187,6 +192,12 @@ public class Hero extends Character
             canMove = refLink.GetMap().checkCollisionWithObstacles(x, y + yMove, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().collisionBattery(getBounds());
             foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
+            mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            refLink.GetMap().checkCollisionWithButtonAlb1(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu3(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb3(getBounds());
 //            System.out.println("down "+canMove);
 //            System.out.println(x+" "+(y+yMove));
 //            System.out.println();
@@ -209,9 +220,14 @@ public class Hero extends Character
 
             if(foundChest)
             {
-                System.out.println("gasit cufar");
+               // System.out.println("gasit cufar");
                 keys++;
-        //        InfoBox.ShowInfo("Ai gasit o cheie","Chei");
+                if(keys>=2)
+                {
+                    System.out.println("intra pe aici");
+             //       mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+                }
+                //        InfoBox.ShowInfo("Ai gasit o cheie","Chei");
             }
         }
         else if(refLink.GetKeyManager().left)
@@ -221,6 +237,12 @@ public class Hero extends Character
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().collisionBattery(getBounds());
             foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
+            mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            refLink.GetMap().checkCollisionWithButtonAlb1(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu3(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb3(getBounds());
             System.out.println("left"+canMove);
             System.out.println((x+xMove)+" "+y);
             System.out.println();
@@ -235,19 +257,23 @@ public class Hero extends Character
                 xMove=40;
                 SetY(y);
             }
-           // xMove=-speed;
+            // xMove=-speed;
 
             if(foundBattery)
             {
-                System.out.println("merge bine");
+            //    System.out.println("merge bine");
                 speed+=0.5f;
             }
 
             if(foundChest)
             {
-                System.out.println("gasit cufar");
+          //      System.out.println("gasit cufar");
                 keys++;
-          //      InfoBox.ShowInfo("Ai gasit o cheie","Chei");
+                if(keys>=2)
+                {
+                    System.out.println("intra pe aici");
+                }
+                //      InfoBox.ShowInfo("Ai gasit o cheie","Chei");
             }
 
         }
@@ -258,6 +284,13 @@ public class Hero extends Character
             canMove = refLink.GetMap().checkCollisionWithObstacles(x + xMove, y, DEFAULT_CREATURE_WIDTH);
             foundBattery=refLink.GetMap().collisionBattery(getBounds());
             foundChest=refLink.GetMap().checkCollisionWithChest(getBounds());
+            mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+            refLink.GetMap().checkCollisionWithButtonAlb1(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu2(getBounds());
+            refLink.GetMap().checkCollisionWithButtonRosu3(getBounds());
+            refLink.GetMap().checkCollisionWithButtonAlb3(getBounds());
+
             System.out.println("right"+canMove);
             System.out.println((x+xMove)+" "+y);
             System.out.println();
@@ -275,15 +308,20 @@ public class Hero extends Character
 
             if(foundBattery)
             {
-                System.out.println("merge bine");
+        //        System.out.println("merge bine");
                 speed+=0.5f;
             }
 
             if(foundChest)
             {
-                System.out.println("gasit cufar");
+             //   System.out.println("gasit cufar");
                 keys++;
-            //    InfoBox.ShowInfo("Ai gasit o cheie","Chei");
+                if(keys>=2)
+                {
+                    System.out.println("intra pe aici");
+                    //mapanoua=refLink.GetMap().loadothermap(x,y+yMove,DEFAULT_CREATURE_WIDTH);
+                }
+                //    InfoBox.ShowInfo("Ai gasit o cheie","Chei");
             }
         }
         else if(refLink.GetKeyManager().c)
@@ -308,7 +346,7 @@ public class Hero extends Character
 
         \brief g Contextul grafi in care trebuie efectuata desenarea eroului.
      */
-  //  @Override
+    //  @Override
 //    public void Draw(Graphics g)
 //    {
 //        g.drawImage(image, (int)(x-cameraX), (int)(y-cameraY), width, height, null);
@@ -323,6 +361,32 @@ public class Hero extends Character
     {
 
         g.drawImage(image, (int)x, (int)y, width, height, null);
+
+        Image img;
+
+//        try {
+//            img = ImageIO.read(new File("src/res/textures/rsz_secret_key.png"));
+//            img.getScaledInstance(8,8,img.SCALE_DEFAULT);
+//            g.drawImage(img,800,10,null);
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
+        if(keys!=0)
+        {
+            g.setColor(Color.red);
+            g.drawString("Key Player 1:"+(keys),800,10);
+        }
+
+        g.drawString("Life Player 1:"+(life),800,15);
+
+        if(life==0)
+        {
+            InfoBox.ShowInfo("Ai murit!","Viata personaj 1");
+            refLink.GetGame().StopGame();
+        }
+
 
         ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
 //        g.setColor(Color.blue);

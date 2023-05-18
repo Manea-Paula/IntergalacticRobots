@@ -8,7 +8,7 @@ public class testBD {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:baza1.db");
+       //     c = DriverManager.getConnection("jdbc:sqlite:baza1.db");
             c.setAutoCommit(false);
             stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery( "SELECT * FROM joc;" );

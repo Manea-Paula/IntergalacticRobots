@@ -3,9 +3,12 @@ package PaooGame.Items;
 import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class ObstacolBlade extends Character {
     private static float DEFAULT_SPEED=1.2f;
@@ -24,7 +27,15 @@ public class ObstacolBlade extends Character {
         this.startY = startY;
         this.endY = endY;
 
-        image= Assets.blade;
+       // image= Assets.blade;
+        try
+        {
+            image = ImageIO.read(new File("src/res/textures/blade.png"));
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
 
         bounds.x=(int)x;
         bounds.y=(int)y;

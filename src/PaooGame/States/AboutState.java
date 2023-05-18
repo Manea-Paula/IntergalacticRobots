@@ -33,17 +33,8 @@ public class AboutState extends State
     {
             ///Apel al constructorului clasei de baza.
         super(refLink);
-        backColor= Color.gray;
+        backColor= Color.white;
 
-//        textArea=new JTextArea();
-//        textArea.setEditable(false); // Set to true if you want the text to be editable
-//        textArea.setLineWrap(true); // Enable line wrapping
-//        textArea.setWrapStyleWord(true); // Wrap lines at word boundaries
-//        scrollPane = new JScrollPane(textArea);
-//        scrollPane.setBounds(0, 0, 960, 680); // Set the size of the scroll pane
-//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Always show the vertical scrollbar
-//        options = new String[]{"<-Back", "Play->"};
-//        selectedItem=0;
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniu about.
@@ -71,13 +62,13 @@ public class AboutState extends State
     @Override
     public void Draw(Graphics g)
     {
-//        g.setColor(backColor);
-//        g.fillRect(0,0,960,680);
+        g.setColor(backColor);
+        g.fillRect(0,0,960,680);
        // scrollPane.paintComponents(g);
 
         try
         {
-            background = ImageIO.read(new File("src/res/textures/about.png"));
+            background = ImageIO.read(new File("src/res/textures/paper-with-sidebar-plain.png"));
         }
         catch(IOException e)
         {
@@ -86,22 +77,24 @@ public class AboutState extends State
 
         g.drawImage(background,0,0,960,680,null);
 
-        g.setColor(Color.white);
-        Font font = new Font("Arial", Font.PLAIN, 30);
+        g.setColor(Color.black);
+        Font font = new Font("Calibri", Font.PLAIN, 30);
         g.setFont(font);
         String text = "Game Title: Robots' intergalactic adventure";
-        g.drawString(text, 150, 190);
+        g.drawString(text, 250, 190);
         String text2 = "Version: 1.0.0";
         g.drawString(text2, 150, 220);
         String text3 = "Developer: Manea Paula";
-        g.drawString(text3, 150, 250);
+        g.drawString(text3, 250, 260);
         String text4 = "Release date: 22.05.2023";
-        g.drawString(text4, 150, 280);
+        g.drawString(text4, 250, 290);
 
-        g.setColor(Color.orange);
+        Font font2 = new Font("Calibri", Font.BOLD, 30);
+        g.setFont(font2);
+        g.setColor(Color.red);
         String text5 = "Press P to PLAY the game";
-        g.drawString(text5, 150, 480);
+        g.drawString(text5, 250, 480);
         String text6= "Press M to go to the MAIN MENU";
-        g.drawString(text6,150,520);
+        g.drawString(text6,250,520);
     }
 }

@@ -11,7 +11,6 @@ import PaooGame.Tiles.Tile;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.File;
@@ -191,7 +190,7 @@ public class Game implements Runnable
 
         Metoda trebuie sa fie declarata synchronized pentru ca apelul acesteia sa fie semaforizat.
      */
-    public synchronized void StartGame()
+    public synchronized void StartGame() throws ExceptieProprie
     {
         if(runState == false)
         {
@@ -203,27 +202,29 @@ public class Game implements Runnable
                 /// Threadul creat este lansat in executie (va executa metoda run())
             gameThread.start();
 
-            try {
-                // Creare stream audio
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/res/textures/backgroundMusic.wav"));
-
-                // Creare clip audio
-                music = AudioSystem.getClip();
-                music.open(audioInputStream);
-
-                // Setare volum
-             //   FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-               // gainControl.setValue(10.0f); // Reducem volumul cu 10 decibeli
-
-                // Reproducere în buclă
-                music.loop(Clip.LOOP_CONTINUOUSLY);
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-            }
+//            try {
+//                // Creare stream audio
+//                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/res/textures/backgroundMusic.wav"));
+//
+//                // Creare clip audio
+//                music = AudioSystem.getClip();
+//                music.open(audioInputStream);
+//
+//                // Setare volum
+//                // FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+//                // gainControl.setValue(10.0f); // Reducem volumul cu 10 decibeli
+//
+//                // Reproducere în buclă
+//                music.loop(Clip.LOOP_CONTINUOUSLY);
+//            }
+//            catch (Exception e)
+//            {
+//                throw new ExceptieProprie(e.getMessage());
+//            }
 
             // Pornire fir de execuție pentru sunetul de fundal
-            musicThread = new Thread(() -> music.start());
-            musicThread.start();
+         //   musicThread = new Thread(() -> music.start());
+       //     musicThread.start();
 
 
         }

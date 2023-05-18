@@ -2,8 +2,7 @@ package PaooGame;
 
 public class Main
 {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws ExceptieProprie {
         Game paooGame = new Game("PaooGame", 960, 680);
         paooGame.StartGame();
     }

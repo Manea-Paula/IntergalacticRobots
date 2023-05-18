@@ -24,23 +24,13 @@ public class MenuState extends State
      */
     private BufferedImage background;
     private String[] options;
-    public int selectedItem;
-//    private RefLinks refLinks;
-//    public Rectangle playButton;
-//    public Rectangle settingsButton;
-//    public Rectangle aboutButton;
-//    public Rectangle exitButton;
+    private int selectedItem;
 
     public MenuState(RefLinks refLink)
     {
             ///Apel al constructorului clasei de baza.
         super(refLink);
-        options = new String[]{"Play", "Settings","About", "Exit"};
-//
-//        playButton = new Rectangle(400, 250,150,50);
-//        settingsButton = new Rectangle(400, 350,150,50);
-//        aboutButton = new Rectangle(400, 450,150,50);
-//        exitButton = new Rectangle(400,550,150,50);
+        options = new String[]{"Play", "Settings","How to play","About", "Exit"};
 
         ///Seteaza elementul selectat la prima optiune.
         selectedItem = 0;
@@ -92,21 +82,11 @@ public class MenuState extends State
                 g.setColor(Color.black);
             }
             else {
-                g.setColor(Color.orange);
+                g.setColor(Color.RED);
             }
-            g.drawString(options[i], 480 - g.getFontMetrics().stringWidth(options[i]) / 2, 250 + i * 100);
+            g.drawString(options[i], 480 - g.getFontMetrics().stringWidth(options[i]) / 2, 230 + i * 90);
         }
-//        Font fnt1 = new Font("arial",Font.BOLD,30);
-//        g.setFont(fnt1);
-//        g.setColor(Color.red);
-//        g.drawString("Play", playButton.x+39, playButton.y+33);
-//        g2d.draw(playButton);
-//        g.setColor(Color.orange);
-//        g.drawString("Settings", settingsButton.x+19, settingsButton.y+33);
-//        g2d.draw(settingsButton);
-//        g.setColor(Color.blue);
-//        g.drawString("About", aboutButton.x+29, aboutButton.y+33);
-//        g2d.draw(aboutButton);
+
     }
 
 //    //ma mut mai sus in meniu cu o pozitie
@@ -160,10 +140,13 @@ public class MenuState extends State
                     //change the game state to the settings state
                     State.SetState(new SettingsState(refLink));
                     break;
-                case 2: //about
+                case 2: //how to play
+                    State.SetState(new HowToPlayState(refLink));
+                    break;
+                case 3://about
                     State.SetState(new AboutState(refLink));
                     break;
-                case 3:
+                case 4:
                     //exit the game
                     System.exit(0);
                     refLink.GetGame().StopGame();

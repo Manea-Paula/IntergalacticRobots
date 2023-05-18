@@ -1,22 +1,14 @@
 package PaooGame.Maps;
 
-import PaooGame.InfoBox;
-import PaooGame.Items.Character;
-import PaooGame.Items.Hero;
-import PaooGame.Items.Key;
+import PaooGame.Items.*;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Arrays;
+
 import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-
 
 /*! \class public class Map
     \brief Implementeaza notiunea de harta a jocului.
@@ -32,6 +24,9 @@ public class Map {
     public static int height = 31;         /*!< Inaltimea hartii in numar de dale.*/
     private int[][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
     private int ID;
+  //  private LevelObserver levelObserver;
+    private ObstacolBlade obstacol,obstacol2;
+    ObstacolManager obstacolManager = ObstacolManager.getInstance();
 
     /*! \fn public Map(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -53,6 +48,7 @@ public class Map {
      */
     public void Update()
     {
+        obstacolManager.updateObstacles();
 
     }
 
@@ -69,42 +65,8 @@ public class Map {
             {
 
                 Tile tile= GetTile(x,y);
-                tile.Draw(g,x* Tile.TILE_HEIGHT - Camera.getX(),y*Tile.TILE_HEIGHT- Camera.getY()); //si aici tb intrebat
+                tile.Draw(g,x* Tile.TILE_HEIGHT - Camera.getX(),y*Tile.TILE_HEIGHT- Camera.getY());
             }
-
-        Font fnt0 = new Font("Monospaced", Font.BOLD,18);
-        g.setFont(fnt0);
-        g.setColor(Color.black);
-        BufferedImage img= null;
-
-        try {
-            img = ImageIO.read(new File("src/res/textures/rsz_secret_key.png"));
-            g.drawImage(img,800,10,null);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        if(hasChest)
-        {
-            System.out.println(hasChest);
-           // Character.score++;
-            g.drawString("Key Players "+(Character.score+1),810,19);
-
-            //Character.score+=1;
-           // InfoBox.ShowInfo("You have found one more key!","KeyPlayers");
-
-         //   g.drawString("Speed"+(Hero2.speed),10,19);
-        }
-        else
-            g.drawString("Key Players "+(Character.score+1),810,19);
-
-        if(hasBattery)
-        {
-            System.out.println("hasBattery"+hasBattery);
-            g.drawString("Life "+(Hero.life),10,19);
-        }
-
 
         //Se parcurge matricea de dale (codurile aferente) si se deseneaza harta respectiva
 //       for (int y = 0; y < refLink.GetGame().GetHeight() / Tile.TILE_HEIGHT; y++)
@@ -115,9 +77,8 @@ public class Map {
 //            }
 //        }
 
-
+        obstacolManager.drawObstacles(g);
     }
-
 
 
     /*! \fn public Tile GetTile(int x, int y)
@@ -127,12 +88,14 @@ public class Map {
         intoarce o dala predefinita (ex. grassTile, mountainTile)
      */
     public Tile GetTile(int x, int y) {
-        if (x < 0 || y < 0 || x >= width || y >= height) {
+        if (x < 0 || y < 0 || x >= width || y >= height)
+        {
             return Tile.grassTile;
         }
         Tile t = Tile.tiles[tiles[y][x]];
-        if (t == null) {
-            return Tile.flowerTile;
+        if (t == null)
+        {
+            return Tile.wallTile;
         }
         return t;
     }
@@ -142,7 +105,7 @@ public class Map {
         \brief Functie de incarcare a hartii jocului.
         Aici se poate genera sau incarca din fisier harta
      */
-    private void LoadWorld(int id)
+    public void LoadWorld(int id)
     {
         //atentie latimea si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
         //se poate implementa notiunea de camera/cadru de vizualizare al hartii
@@ -153,7 +116,7 @@ public class Map {
             case 1:
                 try
                 {
-                    Scanner sc = new Scanner(new File("src/res/maps/harta.txt"));
+                    Scanner sc = new Scanner(new File("src/res/maps/mapLevel1.txt"));
                     int rows = 31;
                     int columns = 50;
                     int [][] harta = new int[rows][columns];
@@ -190,7 +153,7 @@ public class Map {
             case 2:
                 try
                 {
-                    Scanner sc = new Scanner(new File("src/res/maps/hartaNivel2.txt"));
+                    Scanner sc = new Scanner(new File("src/res/maps/mapLevel2.txt"));
                     int rows = 31;
                     int columns = 50;
                     int [][] harta = new int[rows][columns];
@@ -224,7 +187,7 @@ public class Map {
             case 3:
                 try
                 {
-                    Scanner sc = new Scanner(new File("src/res/maps/hartaNivel3.txt"));
+                    Scanner sc = new Scanner(new File("src/res/maps/mapLevel3.txt"));
                     int rows = 31;
                     int columns = 50;
                     int [][] harta = new int[rows][columns];
@@ -238,6 +201,12 @@ public class Map {
                     }
                     tiles = harta;
 //                  System.out.println(Arrays.deepToString(harta));
+
+                    obstacol=new ObstacolBlade(refLink,900,150,48,48,70,520);
+                    obstacol2=new ObstacolBlade(refLink,600,150,48,48,40,530);
+
+                    obstacolManager.addObstacle(obstacol);
+                    obstacolManager.addObstacle(obstacol2);
 
                 }
                 catch(Exception e)
@@ -258,8 +227,8 @@ public class Map {
 
         }
 
-    }
 
+    }
 
     /*! \fn private int MiddleEastMap(int x ,int y)
         \brief O harta incarcata static.
@@ -321,8 +290,8 @@ public class Map {
         return map[x][y];
     }
 
-    public int getWidth(){return width;}
-    public  int getHeight(){return height;}
+    public static int getWidth(){return width;}
+    public static int getHeight(){return height;}
 
     public boolean loadothermap(float x, float y, int playerSize)
     {
@@ -346,11 +315,12 @@ public class Map {
                 if (tiles[row][col] == 7 && ID==1 )
                 {
                     LoadWorld(2);
+                    System.out.println("aici e problema");
                     ID=2;
                     return true;
                 }
                 else
-                    if(tiles[row][col]==7 && ID==2)
+                    if(tiles[row][col]==30 && ID==2)
                     {
                         LoadWorld(3);
                         ID=3;
@@ -381,7 +351,8 @@ public class Map {
         {
             for (int col = leftTile; col <= rightTile; col++)
             {
-                if (tiles[row][col] == 1) {
+                if (tiles[row][col] == 1 || tiles[row][col]==4 || tiles[row][col]==14  || tiles[row][col]==15  || tiles[row][col]==16  || tiles[row][col]==24  || tiles[row][col]==25)
+                {
                     return true; // a avut loc o coliziune
                 }
             }
@@ -414,7 +385,7 @@ public class Map {
         {
             for (int j = 0; j < width; j++)
             {
-                if (tiles[i][j] == 5)
+                if (tiles[i][j] == 5 || tiles[i][j]==13 || tiles[i][j]==31)
                 {
                     Rectangle obstacleBounds = new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
                     if(obstacleBounds.intersects(bounds))
@@ -425,13 +396,23 @@ public class Map {
                                 //InfoBox.ShowInfo("Cheie gasita!","Chei");
                                 // g.drawString("Cheie gasita",50,50);
                                 hasChest=true;
-                                tiles[i][j]=0;
+                                if(ID==1)
+                                    tiles[i][j]=0;
+                                else if(ID==2)
+                                        tiles[i][j]=10;
+                                    else if(ID==3)
+                                            tiles[i][j]=21;
                                 break;
                             case notFound:
                                 System.out.println("No key found with info: " + PaooGame.Items.Key.notFound.getInfo());
                                 //  hero.score=0;
                                 hasChest=false;
-                                tiles[i][j]=0;                                                      ;
+                                if(ID==1)
+                                    tiles[i][j]=0;
+                                else if(ID==2)
+                                    tiles[i][j]=10;
+                                else if(ID==3)
+                                    tiles[i][j]=21;                                                     ;
                                 break;
                         }
                         return true;
@@ -444,42 +425,20 @@ public class Map {
         return false;
     }
 
-//    public boolean checkCollisionWithBattery(float x, float y, int playerSize)
-//    {
-//       // System.out.println("baterii");
-//        int leftTile = (int) (x - playerSize / 2) / Tile.TILE_HEIGHT;
-//        System.out.println("left tile "+leftTile);
-//        int rightTile = (int) (x + playerSize / 2) / Tile.TILE_HEIGHT;
-//        int topTile = (int) (y - playerSize / 2) / Tile.TILE_WIDTH;
-//        int bottomTile = (int) (y + playerSize / 2) / Tile.TILE_WIDTH;
-//
-//        for (int row = topTile; row < bottomTile; row++)
-//        {
-//            for (int col = leftTile; col < rightTile; col++)
-//            {
-//                if(tiles[row][col]==6)
-//                {
-//                    System.out.println("baterie");
-//                    tiles[row][col]=0;
-//
-//                    return true;
-//                }
-//
-//            }
-//        }
-//
-//        return false;
-//    }
-
     public boolean collisionBattery(Rectangle bounds) {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (tiles[i][j] == 6)
+                if (tiles[i][j] == 6 || tiles[i][j]==12 || tiles[i][j]==32)
                 {
                     Rectangle obstacleBounds = new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
                     if (obstacleBounds.intersects(bounds))
                     {
-                        tiles[i][j]=0;
+                        if(ID==1)
+                            tiles[i][j]=0;
+                        else if(ID==2)
+                            tiles[i][j]=10;
+                        else if(ID==3)
+                            tiles[i][j]=21;
                         return true;
                     }
                 }
@@ -488,13 +447,207 @@ public class Map {
         return false;
     }
 
+    //obiecte nivel 1
 
-    public void checkCollisionWithButton()
+    public void checkCollisionWithButtonAlb1(Rectangle bounds)
     {
+        for(int i=0; i< height; i++)
+        {
+            for(int j=0;j<width;j++)
+            {
+                if(tiles[i][j]==9)
+                {
+                    Rectangle obstacleBounds= new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+                    if(obstacleBounds.intersects(bounds))
+                    {
+                        tiles[i][j]=8;
+                        deactivateButtonAndLight1(i,j);
 
+                    }
 
+                }
+            }
+        }
 
     }
 
+    public void deactivateButtonAndLight1(int i, int j) {
+        if (tiles[i][j] == 8)
+        {
+            // Dezactivare light
+            for (int x = 0; x < height; x++)
+            {
+                for (int y = 0; y < width; y++)
+                {
+                    if (tiles[x][y] == 4)
+                    {
+                        tiles[x][y] = 0;
+                    }
+                }
+            }
+        }
+    }
+
+    //obiecte nivel 2
+    public void checkCollisionWithButtonAlb2(Rectangle bounds)
+    {
+        for(int i=0; i< height; i++)
+        {
+            for(int j=0;j<width;j++)
+            {
+                if(tiles[i][j]==18)
+                {
+                    Rectangle obstacleBounds= new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+                    if(obstacleBounds.intersects(bounds))
+                    {
+                        tiles[i][j]=17;
+                        deactivateButtonAndLight2(i,j);
+
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    public void deactivateButtonAndLight2(int i, int j) {
+        if (tiles[i][j] == 17)
+        {
+            // Dezactivare light
+            for (int x = 0; x < height; x++)
+            {
+                for (int y = 0; y < width; y++)
+                {
+                    if (tiles[x][y] == 14)
+                    {
+                        tiles[x][y] = 10;
+                    }
+                }
+            }
+        }
+    }
+
+    public void checkCollisionWithButtonRosu2(Rectangle bounds)
+    {
+        for(int i=0; i< height; i++)
+        {
+            for(int j=0;j<width;j++)
+            {
+                if(tiles[i][j]==20)
+                {
+                    Rectangle obstacleBounds= new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+                    if(obstacleBounds.intersects(bounds))
+                    {
+                        tiles[i][j]=19;
+                        deactivateButtonAndFire2(i,j);
+
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    public void deactivateButtonAndFire2(int i, int j) {
+        if (tiles[i][j] == 19)
+        {
+            // Dezactivare light
+            for (int x = 0; x < height; x++)
+            {
+                for (int y = 0; y < width; y++)
+                {
+                    if (tiles[x][y] == 15)
+                    {
+                        tiles[x][y] = 10;
+                    }
+                }
+            }
+        }
+    }
+
+    //obiecte nivel 3
+    public void checkCollisionWithButtonRosu3(Rectangle bounds)
+    {
+        for(int i=0; i< height; i++)
+        {
+            for(int j=0;j<width;j++)
+            {
+                if(tiles[i][j]==29)
+                {
+                    Rectangle obstacleBounds= new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+                    if(obstacleBounds.intersects(bounds))
+                    {
+                        tiles[i][j]=28;
+                        deactivateButtonAndFire3(i,j);
+
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    public void deactivateButtonAndFire3(int i, int j) {
+        if (tiles[i][j] == 28)
+        {
+            // Dezactivare light
+            for (int x = 0; x < height; x++)
+            {
+                for (int y = 0; y < width; y++)
+                {
+                    if (tiles[x][y] == 25)
+                    {
+                        tiles[x][y] = 21;
+                    }
+                }
+            }
+        }
+    }
+
+    public void checkCollisionWithButtonAlb3(Rectangle bounds)
+    {
+        for(int i=0; i< height; i++)
+        {
+            for(int j=0;j<width;j++)
+            {
+                if(tiles[i][j]==27)
+                {
+                    Rectangle obstacleBounds= new Rectangle(j * Tile.TILE_WIDTH, i * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+                    if(obstacleBounds.intersects(bounds))
+                    {
+                        tiles[i][j]=26;
+                        deactivateButtonAndLight3(i,j);
+
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    public void deactivateButtonAndLight3(int i, int j) {
+        if (tiles[i][j] == 26)
+        {
+            // Dezactivare light
+            for (int x = 0; x < height; x++)
+            {
+                for (int y = 0; y < width; y++)
+                {
+                    if (tiles[x][y] == 24)
+                    {
+                        tiles[x][y] = 21;
+                    }
+                }
+            }
+        }
+    }
+
+
 
 }
+
+

@@ -5,6 +5,6 @@ import PaooGame.Graphics.Assets;
 public class ButtonTile extends Tile{
     public ButtonTile(int id)
     {
-        super(Assets.button,id);
+        super(Assets.buttonActRosu1,id);
     }
 }

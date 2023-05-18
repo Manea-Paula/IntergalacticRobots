@@ -28,15 +28,31 @@ public class Assets
     public static BufferedImage ErikaAttack1,ErikaAttack2,ErikaAttack3,ErikaAttack4,ErikaAttack5,ErikaAttack6,ErikaAttack7;
     //public static BufferedImage ErikaIdle,ErikaUp1,ErikaUp2,ErikaDown1,ErikaDown2,ErikaLeft1,ErikaLeft2,ErikaRight1,ErikaRight2,ErikaAttack1,ErikaAttack2;
     //   public static BufferedImage soil;
-    public static BufferedImage grass;
+  //  public static BufferedImage grass;
  //   public static BufferedImage mountain;
-    public static BufferedImage wall;
-    public static BufferedImage sand;
-    public static BufferedImage water;
-    public static BufferedImage flower;
-    public static BufferedImage battery;
-    public static BufferedImage chest,button,fireball,blade,light;
-    public static BufferedImage portal;
+    //public static BufferedImage ErikaIdle,ErikaUp1,ErikaUp2,ErikaDown1,ErikaDown2,ErikaLeft1,ErikaLeft2,ErikaRight1,ErikaRight2,ErikaAttack1,ErikaAttack2;
+    //   public static BufferedImage soil;
+    //  public static BufferedImage grass;
+    //   public static BufferedImage mountain;
+//    public static BufferedImage wall, grass,tree;
+//    public static BufferedImage sand,coconut,dune;
+//    public static BufferedImage diamond,gem,purpleSoil;
+//   // public static BufferedImage water;
+// //   public static BufferedImage flower;
+//    public static BufferedImage battery;
+//    public static BufferedImage chest,button,fireball,blade,light;
+//    public static BufferedImage portal;
+    public static BufferedImage      wall, grass, tree,
+            sand,coconut, dune,
+            purpleSoil, gem, diamond,
+            chest1,chest2,chest3,
+            portal1,portal2,
+            battery1, battery2, battery3,
+            buttonActRosu1,buttonActRosu2 ,buttonActRosu3, buttonNactRosu1, buttonNactRosu2, buttonNactRosu3,
+            buttonActAlb1,buttonActAlb2 ,buttonActAlb3, buttonNactAlb1, buttonNactAlb2, buttonNactAlb3,
+            light1, light2,light3,
+            fireRight1,fireRight2,fireRight3,
+            fireDown2;
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -46,22 +62,56 @@ public class Assets
      */
     public static void Init()  {
             /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
-        SpriteSheet sheet = new SpriteSheet(ImageLoader.LoadImage("src/res/textures/SpriteSheet.png"));
+        SpriteSheet sheet = new SpriteSheet(ImageLoader.LoadImage("src/res/textures/SpritesheetFinal.png"));
         SpriteSheet sheetPlayer1= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/player.png"));
         SpriteSheet sheetPlayer2= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/player2.png"));
-        SpriteSheet sheetItems= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/itemsNou.png"));
-    //    SpriteSheet en= new SpriteSheet(ImageLoader.LoadImage("/textures/enemy.png"));
+        SpriteSheet itemN1= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/itemiN1.png"));
+        SpriteSheet itemN2= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/itemiN2.png"));
+        SpriteSheet itemN3= new SpriteSheet(ImageLoader.LoadImage("src/res/textures/itemiN3.png"));
+        //    SpriteSheet en= new SpriteSheet(ImageLoader.LoadImage("/textures/enemy.png"));
 
-            /// Se obtin subimaginile corespunzatoare elementelor necesare.
-          wall=sheet.crop(0,0);
-          sand = sheet.crop(1, 0);
-          water = sheet.crop(2, 0);
-          grass = sheet.crop(3, 0);
-          flower = sheet.crop(4, 0);
+        /// Se obtin subimaginile corespunzatoare elementelor necesare.
+        wall=sheet.crop(0,0);
+        grass=sheet.crop(1,0);
+        tree=sheet.crop(2,0);
+        sand=sheet.crop(0,1);
+        coconut=sheet.crop(1,1);
+        dune=sheet.crop(2,1);
+        purpleSoil=sheet.crop(0,2);
+        diamond=sheet.crop(1,2);
+        gem=sheet.crop(2,2);
 
+        chest1=itemN1.crop(0,0);
+        battery1=itemN1.crop(1,0);
+        fireRight1=itemN1.crop(0,1);
+        light1=itemN1.crop(0,2);
+        buttonActRosu1=itemN1.crop(3,2);
+        buttonNactRosu1=itemN1.crop(2,2);
+        buttonActAlb1=itemN1.crop(1,3);
+        buttonNactAlb1=itemN1.crop(0,3);
+        portal1=itemN1.crop(2,3);
+
+        chest2=itemN2.crop(0,0);
+        battery2=itemN2.crop(1,0);
+        fireRight2=itemN2.crop(0,1);
+        light2=itemN2.crop(0,2);
+        buttonActRosu2=itemN2.crop(2,2);
+        buttonNactRosu2=itemN2.crop(3,2);
+        buttonActAlb2=itemN2.crop(1,3);
+        buttonNactAlb2=itemN2.crop(0,3);
+        portal2=itemN2.crop(2,3);
+        fireDown2=itemN2.crop(2,1);
+
+        chest3=itemN3.crop(0,0);
+        battery3=itemN3.crop(1,0);
+        fireRight3=itemN3.crop(0,1);
+        light3=itemN3.crop(0,2);
+        buttonActRosu3=itemN3.crop(3,2);
+        buttonNactRosu3=itemN3.crop(2,2);
+        buttonActAlb3=itemN3.crop(1,3);
+        buttonNactAlb3=itemN3.crop(0,3);
 
         KevinIdle=sheetPlayer1.crop(0,0);
-
         KevinLeft1=sheetPlayer1.crop(0,2);
         KevinLeft2=sheetPlayer1.crop(1,2);
         KevinLeft3=sheetPlayer1.crop(2,2);
@@ -106,7 +156,6 @@ public class Assets
 
 
         ErikaIdle=sheetPlayer2.crop(1,0);
-
         ErikaUp1=sheetPlayer2.crop(0,3);
         ErikaUp2=sheetPlayer2.crop(1,3);
         ErikaUp3=sheetPlayer2.crop(2,3);
@@ -146,14 +195,6 @@ public class Assets
         ErikaAttack5=sheetPlayer2.crop(4,5);
         ErikaAttack6=sheetPlayer2.crop(5,5);
   //      ErikaAttack7=sheetPlayer2.crop(6,5);
-
-        chest=sheetItems.crop(0,0);
-        battery=sheetItems.crop(1,0);
-        portal=sheetItems.crop(2,0);
-        button=sheetItems.crop(3,0);
-        light=sheetItems.crop(0,1);
-        fireball=sheetItems.crop(1,1);
-        blade=sheetItems.crop(2,1);
 
     }
 }

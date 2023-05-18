@@ -16,12 +16,12 @@ public abstract class Character extends Item
     public static final int DEFAULT_CREATURE_WIDTH  = 32;   /*!< Latimea implicita a imaginii caracterului.*/
     public static final int DEFAULT_CREATURE_HEIGHT = 32;   /*!< Inaltimea implicita a imaginii caracterului.*/
 
-    public static int life=10;     /*!< Retine viata caracterului.*/
-    public static int score=0;
+    public static int life=100;     /*!< Retine viata caracterului.*/
+ //   public static int score=0;
     protected float speed;  /*!< Retine viteza de deplasare caracterului.*/
     protected float xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
     protected float yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
-    public static int keys=0;
+    public int keys;
 
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei Character
@@ -39,7 +39,7 @@ public abstract class Character extends Item
             //Seteaza pe valorile implicite pentru viata, viteza si distantele de deplasare
         life    = DEFAULT_LIFE;
         speed   = DEFAULT_SPEED;
-        score= DEFAULT_SCORE;
+    //    score= DEFAULT_SCORE;
         xMove   = 0;
         yMove   = 0;
     }
@@ -140,6 +140,6 @@ public abstract class Character extends Item
         this.yMove = yMove;
     }
 
-    public void SetScore(int score){ this.score=score;}
-    public int GetScore(){ return score;}
+//    public void SetScore(int score){ this.score=score;}
+//    public int GetScore(){ return score;}
 }
